@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Campaign</title>
+    <style>
+        :root {
+            --bg-page: #222222;
+            --bg-container: #eeeeee;
+            --bg-panel: #ffffff;
+            --bg-muted: #e0e0e0;
+            --color-primary: #333333;
+            --color-muted: #666666;
+            --border-gray: #cccccc;
+            --accent: #0056b3;
+            --success: #198754;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background: var(--bg-page);
+            color: var(--color-primary);
+        }
+
+        .app-container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 28px auto;
+            background: var(--bg-container);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .logo-placeholder {
+            width: 72px;
+            height: 42px;
+            border: 2px dashed var(--border-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--color-muted);
+            border-radius: 4px;
+            background: var(--bg-muted);
+            flex: 0 0 auto;
+        }
+
+        .search-area {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            background: #fff;
+            font: inherit;
+        }
+
+        .btn {
+            padding: 12px 16px;
+            background: #333333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn:hover { background: #444444; }
+        .btn.secondary { background: #666666; }
+        .btn.secondary:hover { background: #777777; }
+        .btn.success { background: var(--success); }
+        .btn.success:hover { background: #157347; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            padding: 24px;
+        }
+
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .panel h2, .panel h3 {
+            margin: 0;
+            padding: 14px 16px;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border-gray);
+            background: var(--bg-muted);
+        }
+
+        .campaign-list { padding: 10px; }
+        .campaign-card {
+            width: 100%;
+            text-align: left;
+            padding: 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .campaign-card:hover, .campaign-card.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.12);
+        }
+
+        .campaign-card strong { display: block; margin-bottom: 4px; }
+        .campaign-card span { display: block; font-size: 0.85rem; color: var(--color-muted); }
+
+        .banner-placeholder {
+            height: 260px;
+            background: repeating-linear-gradient(45deg, #dddddd, #dddddd 12px, #e8e8e8 12px, #e8e8e8 24px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-muted);
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 10px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-gray);
+            background: #fafafa;
+        }
+
+        .detail-body { padding: 18px; }
+        .title-row h1 { margin: 0 0 14px; font-size: 1.6rem; }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px 18px;
+            margin-bottom: 18px;
+        }
+
+        .meta-item {
+            background: #f7f7f7;
+            border: 1px solid var(--border-gray);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .meta-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: var(--color-muted);
+            margin-bottom: 4px;
+        }
+
+        .verified { color: var(--success); font-weight: bold; }
+        .progress-box { margin: 16px 0; }
+        .progress-summary { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; }
+        .progress-bar {
+            height: 24px;
+            background: var(--bg-muted);
+            border: 1px solid var(--border-gray);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            min-width: 40px;
+        }
+
+        .section-box {
+            margin-top: 18px;
+            border: 1px solid var(--border-gray);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .section-box h3 { background: var(--bg-muted); }
+        .section-content { padding: 14px 16px; line-height: 1.5; }
+        .section-content ul { margin: 0; padding-left: 20px; }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .media-placeholder {
+            min-height: 90px;
+            background: var(--bg-muted);
+            border: 2px dashed var(--border-gray);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--color-muted);
+            text-align: center;
+            padding: 10px;
+        }
+
+        .donation-panel {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 16px;
+            border-top: 1px solid var(--border-gray);
+            background: #fafafa;
+        }
+
+        .message {
+            padding: 12px 16px;
+            color: var(--color-muted);
+        }
+
+        @media (max-width: 820px) {
+            header, .search-area, .detail-actions, .donation-panel { flex-direction: column; align-items: stretch; }
+            .content-grid { grid-template-columns: 1fr; }
+            .meta-grid, .media-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="app-container">
+        <header>
+            <div class="logo-placeholder">LOGO</div>
+            <form class="search-area" id="campaign-search-form">
+                <input id="campaign-search" type="search" placeholder="Search Campaigns..." aria-label="Search campaigns">
+                <select id="category-filter" aria-label="Filter campaign category">
+                    <option value="">All Categories</option>
+                    <option value="Community">Community</option>
+                    <option value="Medical">Medical</option>
+                    <option value="Education">Education</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+                <button class="btn" type="submit">Search</button>
+            </form>
+            <a class="btn secondary" href="#">Login</a>
+            <button class="btn success" id="header-donate-button" type="button">Donate</button>
+        </header>
+
+        <section class="content-grid">
+            <aside class="panel" aria-label="Campaign search results">
+                <h2>Campaign Results</h2>
+                <div id="campaign-list" class="campaign-list"></div>
+            </aside>
+
+            <article class="panel" aria-label="Selected campaign details">
+                <div class="banner-placeholder">Campaign Banner Image Placeholder</div>
+                <div class="detail-actions">
+                    <button class="btn secondary" id="save-button" type="button">Save ♥</button>
+                    <button class="btn secondary" id="share-button" type="button">Share ↗</button>
+                </div>
+
+                <div id="campaign-details" class="detail-body"></div>
+
+                <div class="donation-panel">
+                    <input id="donation-amount" type="number" min="1" step="0.01" value="25.00" aria-label="Donation amount">
+                    <button class="btn success" id="donate-now-button" type="button">Donate Now</button>
+                    <button class="btn secondary" id="favourite-button" type="button">Add to Favourites</button>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        class Fundraiser {
+            constructor({ name, verified }) {
+                this.name = name;
+                this.verified = Boolean(verified);
+            }
+        }
+
+        class CampaignMedia {
+            constructor({ label, type }) {
+                this.label = label;
+                this.type = type;
+            }
+        }
+
+        class CampaignUpdate {
+            constructor({ title, description }) {
+                this.title = title;
+                this.description = description;
+            }
+        }
+
+        class FundraisingActivity {
+            constructor(data) {
+                this.campaignId = data.campaignId;
+                this.title = data.title;
+                this.description = data.description;
+                this.category = data.category;
+                this.deadline = data.deadline;
+                this.targetAmount = Number(data.targetAmount);
+                this.currentAmount = Number(data.currentAmount);
+                this.status = data.status || "Active";
+                this.fundraiser = new Fundraiser(data.fundraiser);
+                this.updates = (data.updates || []).map(update => new CampaignUpdate(update));
+                this.media = (data.media || []).map(media => new CampaignMedia(media));
+            }
+
+            getProgressPercentage() {
+                if (this.targetAmount <= 0) return 0;
+                return Math.min(100, Math.round((this.currentAmount / this.targetAmount) * 100));
+            }
+
+            isActive() {
+                return this.status.toLowerCase() === "active";
+            }
+        }
+
+        class CampaignRepository {
+            constructor(endpoint = "/campaigns") {
+                this.endpoint = endpoint;
+                this.fallbackCampaigns = [
+                    {
+                        campaignId: 1,
+                        title: "Help Build a Community Shelter",
+                        fundraiser: { name: "John Tan", verified: true },
+                        category: "Community",
+                        deadline: "20 Dec 2026",
+                        targetAmount: 10000,
+                        currentAmount: 8500,
+                        status: "Active",
+                        description: "This fundraising campaign aims to build a temporary shelter for displaced families and provide food and medical supplies. Campaign updates and media are displayed below.",
+                        updates: [
+                            { title: "Update 1", description: "Construction started" },
+                            { title: "Update 2", description: "Medical supplies delivered" }
+                        ],
+                        media: [
+                            { label: "Image", type: "image" },
+                            { label: "Image", type: "image" },
+                            { label: "Video Thumbnail", type: "video" }
+                        ]
+                    },
+                    {
+                        campaignId: 2,
+                        title: "Emergency Medical Support Fund",
+                        fundraiser: { name: "Aisha Lim", verified: true },
+                        category: "Medical",
+                        deadline: "15 Nov 2026",
+                        targetAmount: 15000,
+                        currentAmount: 4200,
+                        status: "Active",
+                        description: "Raising funds to support urgent medical treatment, medication, and follow-up care for patients who need financial assistance.",
+                        updates: [
+                            { title: "Update 1", description: "Initial hospital consultation completed" }
+                        ],
+                        media: [
+                            { label: "Image", type: "image" },
+                            { label: "Image", type: "image" },
+                            { label: "Video Thumbnail", type: "video" }
+                        ]
+                    },
+                    {
+                        campaignId: 3,
+                        title: "School Supplies for Low-Income Students",
+                        fundraiser: { name: "Marcus Lee", verified: false },
+                        category: "Education",
+                        deadline: "05 Jan 2027",
+                        targetAmount: 5000,
+                        currentAmount: 1250,
+                        status: "Active",
+                        description: "Providing school bags, stationery, textbooks, and learning materials for students from low-income households.",
+                        updates: [
+                            { title: "Update 1", description: "First batch of stationery purchased" }
+                        ],
+                        media: [
+                            { label: "Image", type: "image" },
+                            { label: "Image", type: "image" },
+                            { label: "Video Thumbnail", type: "video" }
+                        ]
+                    }
+                ];
+            }
+
+            async getCampaigns() {
+                try {
+                    const response = await fetch(this.endpoint);
+                    if (!response.ok) throw new Error("Campaign endpoint unavailable");
+                    const campaigns = await response.json();
+                    return campaigns.map(campaign => new FundraisingActivity(campaign));
+                } catch (error) {
+                    return this.fallbackCampaigns.map(campaign => new FundraisingActivity(campaign));
+                }
+            }
+
+            async searchCampaigns(keyword = "", category = "") {
+                const campaigns = await this.getCampaigns();
+                const loweredKeyword = keyword.trim().toLowerCase();
+                return campaigns.filter(campaign => {
+                    const matchesKeyword = !loweredKeyword ||
+                        campaign.title.toLowerCase().includes(loweredKeyword) ||
+                        campaign.description.toLowerCase().includes(loweredKeyword) ||
+                        campaign.fundraiser.name.toLowerCase().includes(loweredKeyword);
+                    const matchesCategory = !category || campaign.category === category;
+                    return matchesKeyword && matchesCategory;
+                });
+            }
+        }
+
+        class CampaignDetailsView {
+            constructor() {
+                this.listElement = document.getElementById("campaign-list");
+                this.detailsElement = document.getElementById("campaign-details");
+            }
+
+            renderCampaignList(campaigns, selectedCampaignId, onSelectCampaign) {
+                this.listElement.innerHTML = "";
+
+                if (campaigns.length === 0) {
+                    this.listElement.innerHTML = '<p class="message">No campaigns found.</p>';
+                    return;
+                }
+
+                campaigns.forEach(campaign => {
+                    const button = document.createElement("button");
+                    button.className = `campaign-card ${campaign.campaignId === selectedCampaignId ? "active" : ""}`;
+                    button.type = "button";
+                    button.innerHTML = `
+                        <strong>${this.escapeHtml(campaign.title)}</strong>
+                        <span>${this.escapeHtml(campaign.category)} • ${campaign.getProgressPercentage()}% funded</span>
+                        <span>Deadline: ${this.escapeHtml(campaign.deadline)}</span>
+                    `;
+                    button.addEventListener("click", () => onSelectCampaign(campaign));
+                    this.listElement.appendChild(button);
+                });
+            }
+
+            renderCampaignDetails(campaign) {
+                const progress = campaign.getProgressPercentage();
+                const verifiedText = campaign.fundraiser.verified ? '<span class="verified">Verified ✔</span>' : '<span>Not Verified</span>';
+                const updatesHtml = campaign.updates.length
+                    ? `<ul>${campaign.updates.map(update => `<li><strong>${this.escapeHtml(update.title)}:</strong> ${this.escapeHtml(update.description)}</li>`).join("")}</ul>`
+                    : '<p>No recent updates yet.</p>';
+                const mediaHtml = campaign.media.length
+                    ? campaign.media.map(media => `<div class="media-placeholder">${this.escapeHtml(media.label)}</div>`).join("")
+                    : '<div class="media-placeholder">Media Placeholder</div>';
+
+                this.detailsElement.innerHTML = `
+                    <div class="title-row">
+                        <h1>Campaign Title: ${this.escapeHtml(campaign.title)}</h1>
+                    </div>
+
+                    <div class="meta-grid">
+                        <div class="meta-item"><span class="meta-label">Fundraiser</span>${this.escapeHtml(campaign.fundraiser.name)} ${verifiedText}</div>
+                        <div class="meta-item"><span class="meta-label">Category</span>${this.escapeHtml(campaign.category)}</div>
+                        <div class="meta-item"><span class="meta-label">Deadline</span>${this.escapeHtml(campaign.deadline)}</div>
+                        <div class="meta-item"><span class="meta-label">Status</span>${this.escapeHtml(campaign.status)}</div>
+                    </div>
+
+                    <div class="progress-box">
+                        <div class="progress-summary">
+                            <span>Progress: $${campaign.currentAmount.toLocaleString()} raised of $${campaign.targetAmount.toLocaleString()}</span>
+                            <span>${progress}%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%">${progress}%</div></div>
+                    </div>
+
+                    <section class="section-box">
+                        <h3>Description</h3>
+                        <div class="section-content">${this.escapeHtml(campaign.description)}</div>
+                    </section>
+
+                    <section class="section-box">
+                        <h3>Recent Updates</h3>
+                        <div class="section-content">${updatesHtml}</div>
+                    </section>
+
+                    <section class="section-box">
+                        <h3>Campaign Media</h3>
+                        <div class="section-content media-grid">${mediaHtml}</div>
+                    </section>
+                `;
+            }
+
+            escapeHtml(value) {
+                return String(value).replace(/[&<>'"]/g, character => ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    "'": "&#39;",
+                    '"': "&quot;"
+                }[character]));
+            }
+        }
+
+        class CampaignDetailsController {
+            constructor(repository, view) {
+                this.repository = repository;
+                this.view = view;
+                this.campaigns = [];
+                this.selectedCampaign = null;
+            }
+
+            async initialise() {
+                this.bindEvents();
+                await this.searchAndRender();
+            }
+
+            bindEvents() {
+                document.getElementById("campaign-search-form").addEventListener("submit", async event => {
+                    event.preventDefault();
+                    await this.searchAndRender();
+                });
+
+                document.getElementById("donate-now-button").addEventListener("click", () => this.redirectToPayment());
+                document.getElementById("header-donate-button").addEventListener("click", () => this.redirectToPayment());
+                document.getElementById("favourite-button").addEventListener("click", () => this.addToFavourites());
+                document.getElementById("save-button").addEventListener("click", () => this.addToFavourites());
+                document.getElementById("share-button").addEventListener("click", () => this.shareCampaign());
+            }
+
+            async searchAndRender() {
+                const keyword = document.getElementById("campaign-search").value;
+                const category = document.getElementById("category-filter").value;
+                this.campaigns = await this.repository.searchCampaigns(keyword, category);
+                this.selectedCampaign = this.campaigns[0] || null;
+                this.render();
+            }
+
+            selectCampaign(campaign) {
+                this.selectedCampaign = campaign;
+                this.render();
+            }
+
+            render() {
+                this.view.renderCampaignList(this.campaigns, this.selectedCampaign?.campaignId, campaign => this.selectCampaign(campaign));
+                if (this.selectedCampaign) {
+                    this.view.renderCampaignDetails(this.selectedCampaign);
+                } else {
+                    this.view.detailsElement.innerHTML = '<p class="message">Select a campaign to view its details.</p>';
+                }
+            }
+
+            redirectToPayment() {
+                if (!this.selectedCampaign) {
+                    alert("Please select a campaign first.");
+                    return;
+                }
+
+                if (!this.selectedCampaign.isActive()) {
+                    alert("This campaign is closed. Donations are disabled.");
+                    return;
+                }
+
+                const amount = Number(document.getElementById("donation-amount").value);
+                if (!amount || amount <= 0) {
+                    alert("Please enter a valid donation amount.");
+                    return;
+                }
+
+                sessionStorage.setItem("selectedCampaign", this.selectedCampaign.title);
+                sessionStorage.setItem("selectedAmount", amount.toFixed(2));
+                window.location.href = "Payment.html";
+            }
+
+            addToFavourites() {
+                if (!this.selectedCampaign) return;
+                const savedCampaignIds = JSON.parse(localStorage.getItem("favouriteCampaignIds") || "[]");
+                if (!savedCampaignIds.includes(this.selectedCampaign.campaignId)) {
+                    savedCampaignIds.push(this.selectedCampaign.campaignId);
+                    localStorage.setItem("favouriteCampaignIds", JSON.stringify(savedCampaignIds));
+                }
+                alert("Campaign saved to favourites.");
+            }
+
+            async shareCampaign() {
+                if (!this.selectedCampaign) return;
+                const shareUrl = `${window.location.origin}${window.location.pathname}?campaignId=${this.selectedCampaign.campaignId}`;
+                try {
+                    await navigator.clipboard.writeText(shareUrl);
+                    alert("Campaign link copied.");
+                } catch (error) {
+                    prompt("Copy this campaign link:", shareUrl);
+                }
+            }
+        }
+
+        const repository = new CampaignRepository();
+        const view = new CampaignDetailsView();
+        const controller = new CampaignDetailsController(repository, view);
+        controller.initialise();
+    </script>
+</body>
+</html>
