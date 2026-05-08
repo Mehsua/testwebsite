@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+//This is the SQL connector, create all your functions that call dono_DB here
 //Enivronment variables, my sql server is not the same your sql server
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
