@@ -9,10 +9,12 @@
     body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    header {            
+    header {
         width: 100%;
         background-color: #E99331;
         text-align: center;
@@ -29,72 +31,56 @@
         gap: 10px;
     }
 
-    .form-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 60px;
-        width: 100%;
-    }
-
     label {
-        width: 100px;
-        font-size: 24px;
-        margin-top: 24px;
+        font-weight: bold;
     }
 
     input, select {
-        width: 260px;
-        padding: 12px;
-        font-size: 18px;
-        border: none;
-        background-color: #d3d3d3;
-        font-style: italic;
+        padding: 8px;
+        width: 200px;
+        font-size: 14px;
     }
 
     select {
-        color: gray;
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .create-btn {
-        margin-top: 50px;
-        background-color: #6A5D5D;
-        color: white;
-        border: none;
-        padding: 14px 50px;
-        font-size: 18px;
         cursor: pointer;
     }
 
-    </style>
-    </head>
+    .create-btn {
+        margin-top: 20px;
+        background-color: #675A5A;
+        color: white;
+        padding: 10px 25px;
+        text-decoration: none;
+        font-weight: bold;
+        display: block;
+        cursor: pointer;
+        text-align: center;
+        border: none;
+    }
 
-    <body>
+</style>
+</head>
 
-    <header>
-        Account Creation
-    </header>
+<body>
+
+<header>
+    Account Creation
+</header>
 
     <div class="container">
+    
+    <label>Username:</label>
+    <input type="text" id="username">
 
-        <label>Username:</label>
-        <input type="text">
+    <label>Password:</label>
+    <input type="password" id="password">
 
-        <label>Password:</label>
-        <input type="password">
+    <label>Re-enter password:</label>
+    <input type="password" id="rePassword">
 
-        <label>Re-enter password:</label>
-        <input type="password">
-
-        <label>Country:</label>
-        <select>
-            <option selected disabled>-no selection-</option>
+    <label>Select a country:</label>
+    <select id="country">
+        <option value="" selected disabled>-no selection-</option>
             <option>Afghanistan</option>
             <option>Albania</option>
             <option>Algeria</option>
@@ -291,15 +277,48 @@
             <option>Yemen</option>
             <option>Zambia</option>
             <option>Zimbabwe</option>
-        </select>
+    </select>
 
-        <div class="button-container">
-            <button class="create-btn">
-                Create Account
-            </button>
-        </div>
+    <button class="create-btn" onclick="createAccount()">
+        Create Account
+    </button>
 
 </div>
+
+<script>
+
+async function createAccount() {
+
+    const username = document.querySelector("#username").value
+    const password = document.querySelector("#password").value
+    const rePassword = document.querySelector("#rePassword").value
+    const country = document.querySelector("#country").value
+
+    const res = await fetch("http://localhost:8080/createAccount", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            password,
+            rePassword,
+            country
+        })
+    })
+
+    const data = await res.json()
+
+    if (data.success) {
+        alert(data.message)
+        //Redirect to home page
+        window.location.href = "index.html"
+    } else {
+        alert(data.message)
+    }
+}
+
+</script>
 
 </body>
 </html>
