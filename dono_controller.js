@@ -4,7 +4,7 @@ import cors from "cors"
 import {fileURLToPath} from "url"
 
 //IMPORTANT!!!! Remember to add your function name here in order for them to work
-import {getAccounts, createAccount} from "./dono_db.js"
+import {getAccounts, createAccount, getCampaigns, getDonations} from "./dono_db.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -88,6 +88,16 @@ app.post("/createAccount", async (req, res) => {
             message: "Server error"
         })
     }
+})
+
+app.get("/api/campaigns", async (req, res) => {
+    const campaigns = await getCampaigns()
+    res.json(campaigns)
+})
+
+app.get("/api/donations", async (req, res) => {
+    const donations = await getDonations()
+    res.json(donations)
 })
 
 //For testing purposes
