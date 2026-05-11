@@ -15,8 +15,10 @@ app.use(express.json())
 app.use(express.static("public"))
 
 //Check dono_accounts table for matching rows, deny login if no match
+//Check for role, send to admin_dashboard.html if role = admin
+//Else, send to index.html
 app.post("/login", async (req, res) => {
-    const {username, password} = req.body
+    const { username, password } = req.body
 
     try {
         const accounts = await getAccounts()
@@ -26,16 +28,26 @@ app.post("/login", async (req, res) => {
         )
 
         if (user) {
-            res.json({success: true, message: "Login successful"})
-        } else {
-            res.json({success: false, message: "Invalid credentials"})
+            res.json({
+                success: true,
+                role: user.role
+            })
+        } 
+        
+        else {
+            res.json({
+                success: false,
+                message: "Invalid credentials"
+            })
         }
 
-    //Will only show if expressjs conenction not setup
-    //remember to "node dono_controller" then "npm start"
     } catch (err) {
         console.error(err)
-        res.status(500).json({ success: false, message: "Server error"})
+
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        })
     }
 })
 
