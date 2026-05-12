@@ -311,6 +311,9 @@ async function createAccount() {
 
     if (data.success) {
         alert(data.message)
+        // SAVE the country locally so other pages can "filter" by it
+        localStorage.setItem('userCountry', country);
+        
         //Redirect to home page
         window.location.href = "index.html"
     } else {
