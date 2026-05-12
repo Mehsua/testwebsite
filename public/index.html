@@ -497,13 +497,43 @@ const campaigns = [
   { id:2, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:256, goal:1000, deadline:"2025-06-01", donors:16 },
   { id:3, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:266, goal:1000, deadline:"2025-06-01", donors:16 },
 ];
+// 1. GRAB THE SAVED COUNTRY
+// This looks into the browser's "pocket" to see if account creation saved a country
+const savedCountry = localStorage.getItem('userCountry');
 
+// 2. APPLY THE FILTER
+// We create a NEW array called 'filteredCampaigns'
+const filteredCampaigns = campaigns.filter(c => {
+    // If no country is saved, show everything (don't filter)
+    if (!savedCountry) return true;
+    
+    // Otherwise, only keep campaigns that match the saved country
+    return c.country === savedCountry;
+});
 // function doSearch() {
 //   const kw = document.getElementById('search-input').value.trim();
 //   window.location.href = kw ? 'discover.html?q=' + encodeURIComponent(kw) : 'discover.html';
 // }
 
-document.getElementById('featured-grid').innerHTML = campaigns.slice(0, 3).map(c => {
+async function loadCampaigns() {
+    const savedCountry = localStorage.getItem('userCountry');
+    
+    // We send the country as a "Query Parameter" (?country=Singapore)
+    // This tells the backend exactly what to filter
+    const url = savedCountry 
+        ? `http://localhost:8080/getCampaigns?country=${encodeURIComponent(savedCountry)}`
+        : `http://localhost:8080/getCampaigns`;
+
+    try {
+        const res = await fetch(url);
+        const campaigns = await res.json(); // Data comes from backend now!
+
+        const grid = document.getElementById('featured-grid');
+        
+        if (campaigns.length === 0) {
+            grid.innerHTML = "<p>No campaigns found for your region.</p>";
+            return;
+        }
   const pct  = Math.min(100, Math.round(c.raised / c.goal * 100));
   const days = Math.max(0, Math.round((new Date(c.deadline) - Date.now()) / 86400000));
   return `<div class="camp-card">
