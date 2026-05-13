@@ -1,0 +1,20 @@
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --surface: #2a2a2a;
+  --surface2: #333333;
+  --border: #444444;
+  --text: #f0f0f0;
+  --text2: #aaaaaa;
+  --text3: #777777;
+}
+
+/* For pages using style.css (campaign-history, donation-history, etc.) */
+[data-theme="dark"] body { background-color: #1a1a1a; color: #f0f0f0; }
+[data-theme="dark"] .container { background-color: #2a2a2a; }
+[data-theme="dark"] .page-header { background-color: #333; border-color: #444; }
+[data-theme="dark"] .page-header h1 { color: #f0f0f0; }
+[data-theme="dark"] .card { border-color: #444; }
+[data-theme="dark"] .campaign-title,
+[data-theme="dark"] .amount { color: #f0f0f0; }
+[data-theme="dark"] .campaign-status { color: #aaa; }
+/* etc. */
