@@ -56,6 +56,7 @@ create table Campaign
 (
 	campaignID		char(4),
     title			varchar(30) not null,
+	country         varchar(255) not null,
     category		varchar(30) not null,
     description		varchar(100) not null,
     targetAmount	decimal(10, 2) not null,
@@ -121,12 +122,13 @@ INSERT INTO Admin VALUES ('U015');
 
 -- Campaign
 INSERT INTO Campaign
-VALUES ('C001', 'Nepal Relief', 'Disaster', 'Help earthquake victims in Nepal', 50000.00, '2026-12-31', 'Open', 'U001');
+VALUES ('C001', 'Nepal Relief', 'Nepal' 'Disaster', 'Help earthquake victims in Nepal', 50000.00, '2026-12-31', 'Open', 'U001');
 
 INSERT INTO Campaign
 VALUES (
 'C002',
 'Cancer Treatment Fund',
+'Singapore'
 'Medical',
 'Support John cancer treatment',
 30000.00,
@@ -139,6 +141,7 @@ INSERT INTO Campaign
 VALUES (
 'C003',
 'Feed Hungry Children',
+'South Africa'
 'Charity',
 'Provide meals for children',
 20000.00,
@@ -151,6 +154,7 @@ INSERT INTO Campaign
 VALUES (
 'C004',
 'Flood Victim Support',
+'Nepal'
 'Disaster',
 'Help flood victims rebuild homes',
 45000.00,
@@ -163,6 +167,7 @@ INSERT INTO Campaign
 VALUES (
 'C005',
 'School Scholarship Fund',
+'Singapore'
 'Education',
 'Scholarships for poor students',
 25000.00,
