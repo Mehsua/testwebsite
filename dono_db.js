@@ -69,3 +69,26 @@ export async function getCampaigns(country) {
 //     ("insert into accounts (name, id) values (?, ?)", [name, id])
 //     return {name, id};
 // }
+
+export async function getCampaigns() {
+    const [rows] = await pool.query(
+        "SELECT * FROM Campaign"
+    )
+
+    return rows
+}
+
+export async function getDonations() {
+    const [rows] = await pool.query(`
+            SELECT 
+                d.donationID,
+                c.title,
+                c.status,
+                c.deadline,
+                d.amount
+            FROM Donation d
+            JOIN Campaign c ON d.campaignID = c.campaignID
+        `)
+
+    return rows
+}
