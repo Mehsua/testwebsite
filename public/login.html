@@ -92,13 +92,13 @@
     <br>
 
     <!--Direct to homepage-->    
-    <a href="temporary.html" class="link">Continue as visitor</a>
+    <a href="index.html" class="link">Continue as visitor</a>
     <br>
 
     <div class="text">Don't have an account?</div>
 
     <!--Direct to account creation page-->
-    <a href="temporary.html" class="link register">Register here!</a>
+    <a href="account_creation.html" class="link register">Register here!</a>
 
 </div>
 
@@ -118,7 +118,15 @@ async function login() {
     const data = await res.json()
 
     if (data.success) {
-        window.location.href = "temporary.html"
+
+        if (data.role === "admin") {
+            window.location.href = "admin_dashboard.html"
+        } 
+        
+        else {
+            window.location.href = "index.html"
+        }
+
     } else {
         alert(data.message)
     }

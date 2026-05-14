@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+/* Top Header */
+header {
+    width: 100%;
+    background-color: #E99331;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* Main Layout */
+.dashboard {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    height: calc(100vh - 100px);
+    box-sizing: border-box;
+}
+
+/* Left Side */
+.left-section {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Right Side */
+.right-section {
+    width: 30%;
+}
+
+/* Dashboard Boxes */
+.box {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Box Headers */
+.box-header {
+    background-color: #A39C9C;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Box Content Area */
+.box-content {
+    flex: 1;
+    padding: 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    Admin Dashboard
+</header>
+
+<div class="dashboard">
+
+    <!-- Left Side -->
+    <div class="left-section">
+
+        <!-- User Reports -->
+        <div class="box">
+            <div class="box-header">
+                User Reports
+            </div>
+
+            <div class="box-content">
+                
+            </div>
+        </div>
+
+        <!-- User Feedback -->
+        <div class="box">
+            <div class="box-header">
+                User Feedback
+            </div>
+
+            <div class="box-content">
+                
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Right Side -->
+    <div class="right-section">
+
+        <div class="box" style="height: 100%;">
+            
+            <div class="box-header">
+                Activity Overview
+            </div>
+
+            <div class="box-content">
+                
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

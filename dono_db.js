@@ -34,6 +34,27 @@ export async function createAccount(username, password, country) {
         country
     }
 }
+export async function getCampaigns(country) {
+    // We use a base query. 
+    // Even if you didn't make the table, we assume these standard columns exist
+    let query = "SELECT * FROM campaigns";
+    let params = [];
+
+    // If the frontend sends a country (via the header), we filter the results
+    if (country && country !== "all" && country !== "null" && country !== "-no selection-") {
+        query += " WHERE country = ?";
+        params.push(country);
+    }
+
+    try {
+        const [rows] = await pool.query(query, params);
+        return rows;
+    } catch (err) {
+        // If the table doesn't exist yet because your teammate hasn't made it,
+        // this catch prevents the whole server from crashing.
+        console.error("Database Error: Is the 'campaigns' table created yet?", err.message);
+        return []; 
+    }
 
 // export async function getAccount(id)
 // {
@@ -48,3 +69,17 @@ export async function createAccount(username, password, country) {
 //     ("insert into accounts (name, id) values (?, ?)", [name, id])
 //     return {name, id};
 // }
+export async function getDonations() {
+    const [rows] = await pool.query(`
+            SELECT 
+                d.donationID,
+                c.title,
+                c.status,
+                c.deadline,
+                d.amount
+            FROM Donation d
+            JOIN Campaign c ON d.campaignID = c.campaignID
+        `)
+
+    return rows
+}
