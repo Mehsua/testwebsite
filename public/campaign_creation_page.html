@@ -185,6 +185,22 @@
     </div>
 
     <div class="field">
+      <label>Category <span class="hint">— max 30 characters</span></label>
+      <input type="text" id="category" placeholder="e.g. Medical, Disaster, Education" maxlength="30" />
+      <div style="font-size:12px; color:var(--color-text-secondary); margin-top:4px;"><span id="cat-count">0</span>/30</div>
+    </div>
+
+    <div class="field">
+      <label>Campaign deadline</label>
+      <input type="date" id="deadline" />
+    </div>
+
+    <div class="field">
+      <label>Your name <span class="hint">— campaign creator</span></label>
+      <input type="text" id="creator-name" placeholder="e.g. John Smith" />
+    </div>
+
+    <div class="field">
       <label>Campaign photo <span class="hint">— optional, helps people connect with your cause</span></label>
 
       <div class="upload-zone" id="upload-zone">
@@ -450,8 +466,12 @@
       <h2>Your campaign is live!</h2>
       <div class="summary">
         <img id="s-photo" class="summary-photo hidden" src="" alt="Campaign photo" />
+        <div class="summary-row"><span>Campaign ID</span><span id="s-id">—</span></div>
         <div class="summary-row"><span>Title</span><span id="s-title">—</span></div>
+        <div class="summary-row"><span>Category</span><span id="s-category">—</span></div>
         <div class="summary-row"><span>Goal</span><span id="s-goal">—</span></div>
+        <div class="summary-row"><span>Deadline</span><span id="s-deadline">—</span></div>
+        <div class="summary-row"><span>Created by</span><span id="s-creator">—</span></div>
       </div>
     </div>
   </div>
@@ -535,12 +555,54 @@
     document.getElementById('upload-zone').style.display = 'block';
   }
 
-  function launch() {
+  // Character counter for category
+  document.getElementById('category').addEventListener('input', function() {
+    document.getElementById('cat-count').textContent = this.value.length;
+  });
+
+  // Auto-generate campaign ID: 
+function generateCampaignID() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = 'C';
+  for (let i = 0; i < 3; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id; // e.g. C4X2, CA9B
+}
+
+  async function launch() {
     const title = document.getElementById('title').value.trim();
     const goal = document.getElementById('goal').value;
+    const story = document.getElementById('story').value.trim();
+    const category = document.getElementById('category').value.trim();
+    const deadline = document.getElementById('deadline').value;
+    const creatorName = document.getElementById('creator-name').value.trim();
+    const country = document.getElementById('country').value;
     const userAnswer = parseInt(document.getElementById('captcha-answer').value, 10);
-    if (!title || !goal) {
-      alert('Please fill in your campaign title and goal.');
+
+    if (!title || !goal || !story) {
+      alert('Please fill in your campaign title, goal and description.');
+      return;
+    }
+    if (!category) {
+      alert('Please enter a category.');
+      return;
+    }
+    if (!deadline) {
+      alert('Please select a deadline.');
+      return;
+    }
+    // Check deadline is in the future
+    if (new Date(deadline) <= new Date()) {
+      alert('Deadline must be a future date.');
+      return;
+    }
+    if (!creatorName) {
+      alert('Please enter your name.');
+      return;
+    }
+    if (!country || country === '-no selection-') {
+      alert('Please select a country.');
       return;
     }
     if (isNaN(userAnswer) || userAnswer !== captchaAnswer) {
@@ -548,8 +610,43 @@
       generateCaptcha();
       return;
     }
+
+    const campaignID = generateCampaignID();
+/*    // For testing without backend, we can skip the fetch and directly show success
+    try {
+      const res = await fetch("http://localhost:8080/createCampaign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          campaignID,
+          title,
+          country,
+          category,
+          description: story,
+          targetAmount: goal,
+          deadline,
+          createdBy: creatorName
+        })
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        alert(data.message || 'Something went wrong. Please try again.');
+        return;
+      }
+    } catch (err) {
+      alert('Could not connect to server. Make sure the server is running.');
+      return;
+    }
+*/
+    // Update success summary
+    document.getElementById('s-id').textContent = campaignID;
     document.getElementById('s-title').textContent = title;
+    document.getElementById('s-category').textContent = category;
     document.getElementById('s-goal').textContent = '$' + Number(goal).toLocaleString();
+    document.getElementById('s-deadline').textContent = new Date(deadline).toLocaleDateString();
+    document.getElementById('s-creator').textContent = creatorName;
 
     // Show photo in summary if uploaded
     const sPhoto = document.getElementById('s-photo');
