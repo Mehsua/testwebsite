@@ -35,7 +35,9 @@ app.post("/login", async (req, res) => {
         if (user) {
             res.json({
                 success: true,
-                role: user.role
+                role: user.role,
+                country: user.country
+                
             })
         } 
         
