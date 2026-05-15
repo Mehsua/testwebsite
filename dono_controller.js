@@ -107,11 +107,6 @@ app.post("/createAccount", async (req, res) => {
     }
 })
 
-app.get("/api/campaigns", async (req, res) => {
-    const campaigns = await getCampaigns()
-    res.json(campaigns)
-})
-
 app.get("/api/donations", async (req, res) => {
     const donations = await getDonations()
     res.json(donations)
@@ -123,7 +118,7 @@ app.get("/dono_db", async (req,res) => {
     res.send(accounts)
 })
 app.get("/getCampaigns", async (req, res) => {
-    const countryFilter = req.headers['x-user-country'];
+    const countryFilter = req.headers['x-user-country'] || 'all';
 
     try {
         // We pass the country header directly to our database function
