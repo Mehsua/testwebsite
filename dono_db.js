@@ -55,7 +55,7 @@ export async function getCampaigns(country) {
         console.error("Database Error: Is the 'campaigns' table created yet?", err.message);
         return []; 
     }
-
+}
 // export async function getAccount(id)
 // {
 //     const [rows] = await pool.query

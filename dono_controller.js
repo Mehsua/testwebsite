@@ -6,12 +6,16 @@ import {fileURLToPath} from "url"
 //IMPORTANT!!!! Remember to add your function name here in order for them to work
 import {getAccounts, createAccount, getCampaigns, getDonations} from "./dono_db.js"
 
+console.log("DB USER:", process.env.MYSQL_USER)
+console.log("DB PASS:", process.env.MYSQL_PASSWORD)
+console.log("DB NAME:", process.env.MYSQL_DATABASE)
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const app = express()
 
 app.use(cors({
-    allowedHeaders: ['Content-Type', 'x-user-country']))
+    allowedHeaders: ['Content-Type', 'x-user-country']}))
 app.use(express.json())
 app.use(express.static("public"))
 
