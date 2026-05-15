@@ -117,14 +117,14 @@ app.get("/dono_db", async (req,res) => {
     const accounts = await getAccounts()
     res.send(accounts)
 })
-app.get("/getCampaigns", async (req, res) => {
+app.get("/getCampaign", async (req, res) => {
     const countryFilter = req.headers['x-user-country'] || 'all';
 
     try {
         // We pass the country header directly to our database function
-        const campaigns = await getCampaigns(countryFilter);
+        const campaign = await getCampaign(countryFilter);
         
-        res.json(campaigns);
+        res.json(campaign);
     } catch (err) {
         console.error("Database error:", err);
         res.status(500).json({ success: false, message: "Failed to fetch campaigns" });
