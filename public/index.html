@@ -762,13 +762,13 @@ function toggleFaq(btn) {
   // Toggle the clicked item
   item.classList.toggle('active');
 }
-async function loadCampaigns() {
+async function loadCampaign() {
   // Get the country saved during account creation
   const container = document.getElementById('featured-grid');
   const savedCountry = localStorage.getItem('userCountry');
       // We call the backend WITHOUT a URL parameter
       try {
-    const res = await fetch("http://localhost:8080/getCampaigns", {
+    const res = await fetch("http://localhost:8080/getCampaign", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -777,8 +777,8 @@ async function loadCampaigns() {
     });
 
     if (!res.ok) throw new Error("Server error");
-    const campaigns = await res.json();
-    console.log("RAW DATA FROM SERVER:", campaigns[0]);
+    const campaign = await res.json();
+    console.log("RAW DATA FROM SERVER:", campaign[0]);
 
     if (campaigns.length === 0) {
         container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text3); padding: 40px;">
@@ -787,7 +787,7 @@ async function loadCampaigns() {
         return;
     }
 
-    container.innerHTML = campaigns.slice(0, 3).map(c => {
+    container.innerHTML = campaign.slice(0, 3).map(c => {
         // BRIDGE: Fixed naming consistency
         const raised = Number(c.raisedAmount) || 0;
         const goal = Number(c.targetAmount) || 0; // Changed to 'goal' to match logic below
@@ -826,7 +826,7 @@ async function loadCampaigns() {
 }
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', loadCampaigns);
+document.addEventListener('DOMContentLoaded', loadCampaign);
 </script>
 
 <script>
