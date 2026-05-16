@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campaign History</title>
     <link rel="stylesheet" href="style.css" />
-    <script></script>
+    <link rel="stylesheet" href="darkmode.css">
+    <script src="darkmode.js" defer></script>
 </head>
 <body>
 
     <div class="container">
 
-        <a href="#" class="back-link">Return to Homepage</a>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 10px 0;">
+            <a href="#" class="back-link">Return to Homepage</a>
+            <label style="font-size: 14px;">
+                <input type="checkbox" id="dark-toggle"> Dark mode
+            </label>
+        </div>
 
         <header class="page-header">
             <h1>Campaign History</h1>

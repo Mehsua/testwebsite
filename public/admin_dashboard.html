@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="darkmode.css">
+    <script src="darkmode.js" defer></script>
 <meta charset="UTF-8">
 <title>Admin Dashboard</title>
 
@@ -20,6 +22,7 @@ header {
     padding: 20px 0;
     font-size: 32px;
     font-weight: bold;
+    position: relative;
 }
 
 /* Main Layout */
@@ -75,6 +78,9 @@ header {
 
 <header>
     Admin Dashboard
+    <label style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: normal;">
+        <input type="checkbox" id="dark-toggle"> Dark mode
+    </label>
 </header>
 
 <div class="dashboard">
