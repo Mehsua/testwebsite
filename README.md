@@ -11,6 +11,8 @@ Things like the sql table, the express.js script should stay outside
 
 Steps to run Express:
 1. Add .env file with above steps
-2. npm install
-3. node dono_controller.js
-4. npm start
+2. drop database
+3. npm install
+4. npm install multer
+5. node dono_controller.js
+6. npm start
