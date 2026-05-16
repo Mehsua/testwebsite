@@ -208,13 +208,22 @@
       <textarea id="story" placeholder="Explain who will benefit and how the money will be used..."></textarea>
     </div>
 
-    <div class="field">
-      <label>Category <span class="hint">— max 30 characters</span></label>
-      <input type="text" id="category" placeholder="e.g. Medical, Disaster, Education" maxlength="30">
-      <div style="font-size:12px; color:var(--color-text-secondary); margin-top:4px;">
-        <span id="cat-count">0</span>/30
-      </div>
-    </div>
+      <div class="field">
+            <label>Category</label>
+            <select id="category">
+              <option value="" selected disabled>-no selection-</option>
+              <option>Medical</option>
+              <option>Education</option>
+              <option>Business</option>
+              <option>Environment</option>
+              <option>Nonprofit</option>
+              <option>Volunteer</option>
+              <option>Wishes</option>
+              <option>Family</option>
+              <option>Event</option>
+              <option>Faith</option>
+            </select>
+          </div>
 
     <div class="field">
       <label>Campaign deadline</label>
