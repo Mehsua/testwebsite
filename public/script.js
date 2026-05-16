@@ -53,7 +53,7 @@ function renderCampaigns(campaigns) {
 }
 
 async function loadCampaigns() {
-    const res = await fetch("/api/campaigns")
+    const res = await fetch("http://localhost:8080/getCampaign")
     const campaigns = await res.json()
 
     renderCampaigns(campaigns)
