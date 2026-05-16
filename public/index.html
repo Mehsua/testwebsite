@@ -1,942 +1,1093 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Dono</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --bg:       #ffffff;
-  --surface:  #f0f0f0;
-  --surface2: #e0e0e0;
-  --border:   #cccccc;
-  --text:     #111111;
-  --text2:    #555555;
-  --text3:    #888888;
-  --radius:   8px;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-button {
-  cursor: pointer;
-  font-family: inherit;
-}
-
-input {
-  font-family: inherit;
-}
-
-/* ── NAV ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 24px;
-}
-
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.nav-logo {
-  font-size: 1.1rem;
-  font-weight: 500;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.nav-search {
-  flex: 1;
-  display: flex;
-  gap: 8px;
-}
-
-.nav-search-input {
-  flex: 1;
-  padding: 7px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 13px;
-  background: var(--bg);
-  color: var(--text);
-}
-
-.nav-search-input:focus {
-  outline: none;
-  border-color: var(--text2);
-}
-
-.nav-search-btn {
-  padding: 7px 16px;
-  border-radius: var(--radius);
-  background: var(--surface2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.nav-search-btn:hover {
-  background: var(--border);
-}
-
-.nav-auth {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.btn-login {
-  padding: 6px 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: transparent;
-  font-size: 13px;
-  color: var(--text);
-}
-
-.btn-login:hover {
-  background: var(--surface);
-}
-
-.btn-signup {
-  padding: 6px 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  font-size: 13px;
-  color: var(--text);
-}
-
-.btn-signup:hover {
-  background: var(--border);
-}
-
-/* ── CONTAINER ── */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ── HERO ── */
-.hero {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 52px 48px;
-  margin: 20px auto;
-  max-width: 1100px;
-  margin-left: 24px;
-  margin-right: 24px;
-}
-
-.hero-title {
-  font-size: 2rem;
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: 12px;
-}
-
-.hero-sub {
-  color: var(--text2);
-  font-size: 0.9rem;
-  line-height: 1.75;
-  margin-bottom: 6px;
-}
-
-.hero-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 9px 22px;
-  border-radius: var(--radius);
-  background: var(--surface2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.hero-btn:hover {
-  background: var(--border);
-}
-
-/* ── SECTION ── */
-.section {
-  padding: 8px 0 40px;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.section-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-.section-link {
-  font-size: 12px;
-  color: var(--text2);
-}
-
-.section-link:hover {
-  color: var(--text);
-}
-
-/* ── CAMPAIGN GRID ── */
-.camp-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-/* ── CAMPAIGN CARD ── */
-.camp-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.camp-img {
-  height: 140px;
-  background: var(--surface2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.6rem;
-  flex-shrink: 0;
-}
-
-.camp-body {
-  padding: 14px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.camp-cat {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text3);
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.camp-title {
-  font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 1.35;
-  margin-bottom: 4px;
-  cursor: pointer;
-}
-
-.camp-title:hover {
-  color: var(--text2);
-}
-
-.camp-desc {
-  font-size: 12px;
-  color: var(--text2);
-  line-height: 1.6;
-  flex: 1;
-  margin-bottom: 10px;
-}
-
-.camp-prog-wrap {
-  height: 6px;
-  background: var(--surface2);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-
-.camp-prog-fill {
-  height: 100%;
-  background: var(--text2);
-  border-radius: 3px;
-}
-
-.camp-raised {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-
-.camp-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: var(--text3);
-}
-
-/* ── CTA ── */
-.cta {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 44px;
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.cta-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 14px;
-}
-
-.cta-btn {
-  display: inline-block;
-  padding: 9px 22px;
-  border-radius: var(--radius);
-  background: var(--surface2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.cta-btn:hover {
-  background: var(--border);
-}
-  
-/* ── FAQ ── */
-.faq-container {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.faq-item {
-  border-bottom: 1px solid var(--border);
-}
-
-.faq-item:last-child {
-  border-bottom: none;
-}
-
-.faq-question {
-  width: 100%;
-  padding: 16px 20px;
-  background: var(--bg);
-  border: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  text-align: left;
-  transition: background 0.2s;
-}
-
-.faq-question:hover {
-  background: var(--surface);
-}
-
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, padding 0.3s ease;
-  background: #fdfdfd;
-  color: var(--text2);
-  font-size: 13px;
-}
-
-.faq-answer p {
-  padding: 0 20px 16px 20px;
-}
-
-.faq-item.active .faq-answer {
-  max-height: 200px; /* Adjust if answers are very long */
-}
-
-.faq-icon {
-  font-size: 18px;
-  transition: transform 0.3s;
-}
-
-.faq-item.active .faq-icon {
-  transform: rotate(45deg); /* Turns + into x */
-}
-
-/* ── PROFILE DROPDOWN ── */
-.nav-profile {
-  position: relative;
-  display: none;
-  flex-shrink: 0;
-}
-
-.profile-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-  transition: opacity .15s;
-}
-
-.profile-btn:hover { opacity: .8; }
-
-.dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  width: 200px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.10);
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-4px);
-  transition: all .18s;
-  z-index: 200;
-}
-
-.dropdown.open {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateY(0);
-}
-
-.dropdown-header {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border);
-}
-
-.dropdown-username {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.dropdown-role {
-  font-size: 11px;
-  color: var(--text2);
-  margin-top: 2px;
-  text-transform: capitalize;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--text);
-  cursor: pointer;
-  transition: background .12s;
-  text-decoration: none;
-}
-
-.dropdown-item:hover { background: var(--surface); }
-
-.dropdown-icon {
-  font-size: 15px;
-  width: 18px;
-  text-align: center;
-}
-
-.dropdown-divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 4px 0;
-}
-
-.dropdown-logout { color: var(--text2); }
-
-
-/* ── LOGIN PROMPT MODAL ── */
-.login-modal-bg {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.35);
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s;
-}
-
-.login-modal-bg.open {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.login-modal {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 28px 22px;
-  width: 100%;
-  max-width: 360px;
-  text-align: center;
-  transform: translateY(-8px);
-  transition: transform .2s;
-}
-
-.login-modal-bg.open .login-modal {
-  transform: translateY(0);
-}
-
-.login-modal-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.login-modal-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--text);
-}
-
-.login-modal-msg {
-  font-size: 13px;
-  color: var(--text2);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.login-modal-btns {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-
-.login-modal-btn-primary {
-  padding: 8px 20px;
-  border-radius: var(--radius);
-  background: var(--text);
-  color: var(--bg);
-  border: none;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.login-modal-btn-primary:hover { background: var(--text2); }
-
-.login-modal-btn-secondary {
-  padding: 8px 20px;
-  border-radius: var(--radius);
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-size: 13px;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.login-modal-btn-secondary:hover { background: var(--surface); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .camp-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    padding: 32px 24px;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-
-  .hero-title {
-    font-size: 1.5rem;
-  }
-}
-</style>
-
-<style>
-  .fb-wrap { max-width: 520px; margin: 1.5rem auto; }
-  .fb-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; }
-  .fb-label { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 6px; display: block; }
-  .fb-name { width: 100%; box-sizing: border-box; margin-bottom: 1rem; }
-  .fb-textarea { width: 100%; box-sizing: border-box; min-height: 110px; }
-  .fb-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-  .fb-count { font-size: 12px; color: var(--color-text-tertiary); }
-  .fb-success { display: none; text-align: center; padding: 2rem 1rem; }
-  .fb-success p { margin: 0; color: var(--color-text-secondary); font-size: 15px; }
-  .fb-err { font-size: 12px; color: var(--color-text-danger); margin-top: 4px; display: none; }
-</style>
-
-</head>
-<body>
-
-<nav>
-  <div class="nav-inner">
-    <div class="nav-logo">Dono</div>
-    <div class="nav-search">
-      <input class="nav-search-input" type="text" id="search-input" placeholder="Search campaigns..." onkeydown="if(event.key==='Enter')doSearch()"/>
-      <button class="nav-search-btn" onclick="doSearch()">Search</button>
-    </div>
-    <div class="nav-auth" id="nav-auth">
-      <button class="btn-login" onclick="window.location.href='login.html'">Log in</button>
-      <button class="btn-signup" onclick="window.location.href='login.html'">Sign up</button>
-    </div>
-
-    <div class="nav-profile" id="nav-profile">
-      <div class="profile-btn" id="nav-avatar" onclick="toggleDropdown()">?</div>
-      <div class="dropdown" id="nav-dropdown">
-        <div class="dropdown-header">
-          <div class="dropdown-username" id="dropdown-username"></div>
-          <div class="dropdown-role" id="dropdown-role"></div>
-        </div>
-        <a class="dropdown-item" href="index.html">
-          <span class="dropdown-icon">🏠</span> Home
-        </a>
-        <a class="dropdown-item" href="viewCampaign.html">
-          <span class="dropdown-icon">🎯</span> View Campaigns
-        </a>
-        <a class="dropdown-item" href="campaign_creation_page.html">
-          <span class="dropdown-icon">✏️</span> Create Campaign
-        </a>
-        <a class="dropdown-item" href="donation-history.html">
-          <span class="dropdown-icon">📋</span> Donation History
-        </a>
-        <a class="dropdown-item" href="campaign-history.html">
-          <span class="dropdown-icon">📁</span> Campaign History
-        </a>
-        <hr class="dropdown-divider"/>
-        <div class="dropdown-item dropdown-logout" onclick="logout()">
-          <span class="dropdown-icon">🚪</span> Log out
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<div class="container">
-
-  <div class="hero">
-    <div class="hero-title">Fundraiser slogan</div>
-    <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <a class="hero-btn" href="" onclick="requireLogin(event, '')">Donate</a> <!-- ADD HTML HERE WHEN DONE-->
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <div class="section-title">Featured campaigns</div>
-      <a class="section-link" href="">View all</a><!-- ADD HTML HERE WHEN DONE-->
-    </div>
-    <div class="camp-grid" id="featured-grid"></div>
-  </div>
-
-  <div class="cta">
-    <div class="cta-title">Start your own fundraiser today</div>
-    <a class="cta-btn" href="" onclick="requireLogin(event, 'campaign_creation_page.html')">Start a fundraiser</a><!-- ADD HTML HERE WHEN DONE-->
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <div class="section-title">Frequently Asked Questions</div>
-    </div>
-    <div class="faq-container">
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is my donation secure?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Yes, all transactions are encrypted and processed through secure payment gateways. We never store your full credit card details on our servers.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How do I start a fundraiser?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Simply click the "Start a fundraiser" button above, fill in your campaign details, set a goal, and share it with your community!</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Are there any fees?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>We charge a small platform fee to keep the site running, but 100% of the remaining funds go directly to the campaign organizer.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="fb-wrap">
-  <div class="fb-card" id="fb-form">
-    <p style="font-size: 17px; font-weight: 500; margin: 0 0 1.25rem;">Share your feedback</p>
-
-    <label class="fb-label" for="fb-name">Your name (optional)</label>
-    <input class="fb-name" type="text" id="fb-name" placeholder="e.g. Alex">
-
-    <label class="fb-label" for="fb-msg">Message</label>
-    <textarea class="fb-textarea" id="fb-msg" placeholder="Tell us what you think..." maxlength="300"></textarea>
-    <div class="fb-err" id="fb-err">Please write a message before submitting.</div>
-
-    <div class="fb-footer">
-      <span class="fb-count" id="fb-count">0 / 300</span>
-      <button id="fb-submit">Submit</button>
-    </div>
-  </div>
-
-  <div class="fb-success" id="fb-success">
-    <i class="ti ti-circle-check" style="font-size: 32px; color: var(--color-text-success); margin-bottom: 12px; display: block;" aria-hidden="true"></i>
-    <p id="fb-thanks">Thanks for your feedback!</p>
-    <button style="margin-top: 1rem;" id="fb-reset">Submit another</button>
-  </div>
-</div>
-
-<script>
-//const campaigns = [
-  //{ id:1, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:259, goal:1000, deadline:"2025-06-01", donors:16 },
-  //{ id:2, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:256, goal:1000, deadline:"2025-06-01", donors:16 },
-  //{ id:3, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:266, goal:1000, deadline:"2025-06-01", donors:16 },
-//];
-// function doSearch() {
-//   const kw = document.getElementById('search-input').value.trim();
-//   window.location.href = kw ? 'discover.html?q=' + encodeURIComponent(kw) : 'discover.html';
-// }
-function toggleFaq(btn) {
-  const item = btn.parentElement;
-  
-  // Optional: Close other open items (Accordion mode)
-  document.querySelectorAll('.faq-item').forEach(i => {
-    if (i !== item) i.classList.remove('active');
-  });
-
-  // Toggle the clicked item
-  item.classList.toggle('active');
-}
-async function loadCampaign() {
-  // Get the country saved during account creation
-  const container = document.getElementById('featured-grid');
-  const savedCountry = localStorage.getItem('userCountry');
-      // We call the backend WITHOUT a URL parameter
-      try {
-    const res = await fetch("http://localhost:8080/getCampaign", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "x-user-country": savedCountry || "all"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dono - Home</title>
+
+    <style>
+        :root {
+            --page-bg: #ffffff;
+            --card-bg: #ffffff;
+            --muted-bg: #eeeeee;
+            --placeholder-bg: #dddddd;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border: #d0d0d0;
+            --button-bg: #dddddd;
+            --button-hover: #cccccc;
+            --success: #198754;
         }
-    });
 
-    if (!res.ok) throw new Error("Server error");
-    const campaign = await res.json();
-    console.log("RAW DATA FROM SERVER:", campaign[0]);
+        * {
+            box-sizing: border-box;
+        }
 
-    if (campaign.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text3); padding: 40px;">
-            No active campaigns found in ${savedCountry || 'your area'}.
-        </p>`;
-        return;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--page-bg);
+            color: var(--text-main);
+        }
 
-    container.innerHTML = campaign.slice(0, 3).map(c => {
-        // BRIDGE: Fixed naming consistency
-        const raised = Number(c.raisedAmount) || 0;
-        const goal = Number(c.targetAmount) || 0; // Changed to 'goal' to match logic below
-        const donors = c.donorCount || 0; // Added this line so ${donors} works
-        const title = c.title || "Untitled Campaign";
-        const category = c.category || "General";
-        const description = c.description || "";
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-        // Calculation Logic
-        const pct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
-        const days = Math.max(0, Math.round((new Date(c.deadline) - Date.now()) / 86400000));
+        .top-bar {
+            width: 100%;
+            border-bottom: 1px solid var(--border);
+            background: #ffffff;
+        }
 
-        return `
-        <div class="camp-card">
-            <div class="camp-img">🌍</div>
-            <div class="camp-body">
-                <div class="camp-cat">${category}</div>
-                <div class="camp-title" onclick="location.href='viewCampaign.html?id=${c.campaignID}'">${title}</div>
-                <div class="camp-desc">${description.slice(0, 88)}...</div>
-                <div class="camp-prog-wrap">
-                    <div class="camp-prog-fill" style="width:${pct}%"></div>
-                </div>
-                <div class="camp-raised">$${raised.toLocaleString()} raised</div>
-                <div class="camp-meta">
-                    <span>$${goal.toLocaleString()} goal / ${donors} donors</span>
-                    <span>${days > 0 ? days + ' days left' : 'Ended'}</span>
+        .nav {
+            width: min(1220px, calc(100% - 32px));
+            margin: 0 auto;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .nav-search-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .nav-search-input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            border: 1px solid var(--border);
+            background: var(--button-bg);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            transition: 0.15s ease;
+        }
+
+        .btn:hover {
+            background: var(--button-hover);
+        }
+
+        .btn.outline {
+            background: #ffffff;
+        }
+
+        .auth-area {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .account-menu {
+            position: relative;
+            display: none;
+        }
+
+        .account-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--button-bg);
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .account-avatar:hover {
+            background: var(--button-hover);
+        }
+
+        .account-dropdown {
+            position: absolute;
+            top: 62px;
+            right: 0;
+            width: 310px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .account-dropdown.open {
+            display: block;
+        }
+
+        .account-dropdown-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .account-dropdown-header strong {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .account-dropdown-header span {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .dropdown-item {
+            width: 100%;
+            border: none;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            font-size: 1rem;
+            color: var(--text-main);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+        }
+
+        .logout-button {
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .page-shell {
+            width: min(1220px, calc(100% - 32px));
+            margin: 28px auto 70px;
+        }
+
+        .hero {
+            background: var(--muted-bg);
+            border-radius: 12px;
+            padding: 64px 64px;
+            margin-bottom: 34px;
+        }
+
+        .hero h1 {
+            margin: 0 0 20px;
+            font-size: 2.2rem;
+        }
+
+        .hero p {
+            max-width: 900px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .hero .btn {
+            margin-top: 22px;
+            min-width: 110px;
+        }
+
+        .section {
+            margin-top: 44px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        .section-link {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .campaign-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--card-bg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.15s ease;
+        }
+
+        .campaign-card:hover {
+            border-color: #111111;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .campaign-card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: var(--placeholder-bg);
+        }
+
+        .campaign-image-placeholder {
+            width: 100%;
+            height: 220px;
+            background: var(--placeholder-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+
+        .campaign-card-body {
+            padding: 16px;
+        }
+
+        .campaign-category {
+            margin: 0 0 8px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .campaign-title {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .campaign-description {
+            margin: 0 0 14px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.45;
+        }
+
+        .progress-line {
+            width: 100%;
+            height: 7px;
+            background: #e1e1e1;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #111111;
+            border-radius: 999px;
+        }
+
+        .campaign-raised {
+            margin: 0 0 8px;
+            font-weight: 700;
+        }
+
+        .campaign-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            gap: 12px;
+        }
+
+        .start-fundraiser-box {
+            background: var(--muted-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 42px 24px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .start-fundraiser-box h2 {
+            margin: 0 0 20px;
+            font-size: 1.25rem;
+        }
+
+        .faq-section {
+            margin-top: 56px;
+        }
+
+        .faq-section h2 {
+            margin: 0 0 22px;
+            font-size: 1.3rem;
+        }
+
+        .faq-list {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            border: none;
+            background: #ffffff;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-question:hover {
+            background: #f8f8f8;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 24px 20px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        .feedback-section {
+            width: min(560px, 100%);
+            margin: 70px auto 0;
+        }
+
+        .feedback-section h2 {
+            margin: 0 0 24px;
+            font-size: 1.25rem;
+        }
+
+        .feedback-form label {
+            display: block;
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+        }
+
+        .feedback-form input,
+        .feedback-form textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            padding: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .feedback-form textarea {
+            min-height: 125px;
+            resize: vertical;
+        }
+
+        .feedback-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .feedback-footer span {
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .empty-message,
+        .error-message {
+            padding: 18px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .campaign-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .hero {
+                padding: 42px 30px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav {
+                height: auto;
+                padding: 14px 0;
+                flex-wrap: wrap;
+            }
+
+            .brand {
+                width: 100%;
+            }
+
+            .nav-search-form {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .auth-area {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .account-dropdown {
+                left: 0;
+                right: auto;
+                width: min(310px, calc(100vw - 32px));
+            }
+
+            .campaign-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top-bar">
+        <nav class="nav">
+            <a class="brand" href="index.html">Dono</a>
+
+            <form class="nav-search-form" id="home-search-form">
+                <input
+                    class="nav-search-input"
+                    id="home-search-input"
+                    type="search"
+                    placeholder="Search campaigns..."
+                    aria-label="Search campaigns"
+                >
+
+                <button class="btn" type="submit">Search</button>
+            </form>
+
+            <div class="auth-area" id="auth-area">
+                <a class="btn outline" href="login.html" id="login-link">Log in</a>
+                <a class="btn" href="account_creation.html" id="signup-link">Sign up</a>
+
+                <div class="account-menu" id="account-menu">
+                    <button class="account-avatar" id="account-avatar" type="button">
+                        U
+                    </button>
+
+                    <div class="account-dropdown" id="account-dropdown">
+                        <div class="account-dropdown-header">
+                            <strong id="dropdown-user-name">User</strong>
+                            <span id="dropdown-user-role">Donor</span>
+                        </div>
+
+                        <a href="index.html" class="dropdown-item">
+                            <span>🏠</span>
+                            <span>Home</span>
+                        </a>
+
+                        <a href="viewCampaign.html" class="dropdown-item">
+                            <span>🎯</span>
+                            <span>View Campaigns</span>
+                        </a>
+
+                        <a href="campaign_creation_page.html" class="dropdown-item">
+                            <span>🖊️</span>
+                            <span>Create Campaign</span>
+                        </a>
+
+                        <a href="donation-history.html" class="dropdown-item">
+                            <span>📋</span>
+                            <span>Donation History</span>
+                        </a>
+
+                        <a href="campaign-history.html" class="dropdown-item">
+                            <span>📁</span>
+                            <span>Campaign History</span>
+                        </a>
+
+                        <button class="dropdown-item logout-button" id="logout-button" type="button">
+                            <span>🚪</span>
+                            <span>Log out</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>`;
-    }).join('');
-  } catch (err) {
-    console.error("Fetch failed:", err);
-    container.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Unable to load campaigns. Is the server running?</p>";
-  }
+        </nav>
+    </header>
 
-}
+    <main class="page-shell">
+        <section class="hero">
+            <h1>Fundraiser slogan</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.
+            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <a class="btn" href="viewCampaign.html">Donate</a>
+        </section>
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', loadCampaign);
-</script>
+        <section class="section">
+            <div class="section-header">
+                <h2>Featured campaigns</h2>
+                <a class="section-link" href="viewCampaign.html">View all</a>
+            </div>
 
-<script>
-  const msg = document.getElementById('fb-msg');
-  const count = document.getElementById('fb-count');
-  const err = document.getElementById('fb-err');
-  const form = document.getElementById('fb-form');
-  const success = document.getElementById('fb-success');
-  const thanks = document.getElementById('fb-thanks');
+            <div id="featured-campaigns" class="campaign-grid"></div>
+        </section>
 
-  msg.addEventListener('input', () => {
-    count.textContent = msg.value.length + ' / 300';
-  });
+        <section class="start-fundraiser-box">
+            <h2>Start your own fundraiser today</h2>
+            <a class="btn" href="campaign_creation_page.html">Start a fundraiser</a>
+        </section>
 
-  document.getElementById('fb-submit').addEventListener('click', () => {
-    if (!msg.value.trim()) { err.style.display = 'block'; return; }
-    const name = document.getElementById('fb-name').value.trim();
-    thanks.textContent = 'Thanks' + (name ? ', ' + name : '') + '! We got your feedback.';
-    form.style.display = 'none';
-    success.style.display = 'block';
-  });
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
 
-  document.getElementById('fb-reset').addEventListener('click', () => {
-    msg.value = ''; count.textContent = '0 / 300';
-    document.getElementById('fb-name').value = '';
-    err.style.display = 'none';
-    success.style.display = 'none'; form.style.display = 'block';
-  });
-</script>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" type="button">
+                        <span>Is my donation secure?</span>
+                        <strong>+</strong>
+                    </button>
+                    <div class="faq-answer">
+                        Yes. Donation details are handled securely and only required campaign information is shown publicly.
+                    </div>
+                </div>
 
+                <div class="faq-item">
+                    <button class="faq-question" type="button">
+                        <span>How do I start a fundraiser?</span>
+                        <strong>+</strong>
+                    </button>
+                    <div class="faq-answer">
+                        Click “Start a fundraiser”, fill in your campaign details, upload your campaign media, and submit the form.
+                    </div>
+                </div>
 
-<script>
-// ── AUTH / PROFILE DROPDOWN ──
-let dropdownOpen = false;
+                <div class="faq-item">
+                    <button class="faq-question" type="button">
+                        <span>Are there any fees?</span>
+                        <strong>+</strong>
+                    </button>
+                    <div class="faq-answer">
+                        Any platform or payment fees should be clearly stated before a donation is completed.
+                    </div>
+                </div>
+            </div>
+        </section>
 
-function requireLogin(e, destination) {
-  e.preventDefault();
-  if (localStorage.getItem('username')) {
-    // User is logged in — go to destination if provided
-    if (destination) window.location.href = destination;
-  } else {
-    // Not logged in — show prompt
-    document.getElementById('login-modal-bg').classList.add('open');
-  }
-}
+        <section class="feedback-section">
+            <h2>Share your feedback</h2>
 
-function closeLoginPrompt(e) {
-  // Close if clicking the backdrop or cancel button
-  if (!e || e.target === document.getElementById('login-modal-bg')) {
-    document.getElementById('login-modal-bg').classList.remove('open');
-  }
-}
+            <form class="feedback-form" id="feedback-form">
+                <label for="feedback-name">Your name (optional)</label>
+                <input
+                    id="feedback-name"
+                    type="text"
+                    placeholder="e.g. Alex"
+                >
 
-function updateNav() {
-  const username = localStorage.getItem('username');
-  const role     = localStorage.getItem('role');
-  const navAuth    = document.getElementById('nav-auth');
-  const navProfile = document.getElementById('nav-profile');
+                <label for="feedback-message">Message</label>
+                <textarea
+                    id="feedback-message"
+                    maxlength="300"
+                    placeholder="Tell us what you think..."
+                ></textarea>
 
-  if (username) {
-    navAuth.style.display = 'none';
-    navProfile.style.display = 'block';
-    // Build initials from username e.g. "Bobby123" → "BO"
-    const initials = username.slice(0, 2).toUpperCase();
-    document.getElementById('nav-avatar').textContent       = initials;
-    document.getElementById('dropdown-username').textContent = username;
-    document.getElementById('dropdown-role').textContent     = role || 'user';
-  } else {
-    navAuth.style.display    = 'flex';
-    navProfile.style.display = 'none';
-  }
-}
+                <div class="feedback-footer">
+                    <span id="feedback-count">0 / 300</span>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </section>
+    </main>
 
-function toggleDropdown() {
-  dropdownOpen = !dropdownOpen;
-  document.getElementById('nav-dropdown').classList.toggle('open', dropdownOpen);
-}
+    <script>
+        class HomeCampaignRepository {
+            constructor(endpoint = "/getCampaign") {
+                this.endpoint = endpoint;
+            }
 
-function logout() {
-  localStorage.removeItem('username');
-  localStorage.removeItem('role');
-  localStorage.removeItem('userCountry');
-  window.location.href = 'index.html';
-}
+            async getCampaigns() {
+                const response = await fetch(this.endpoint, {
+                    headers: {
+                        "x-user-country": this.getUserCountryFilter()
+                    }
+                });
 
-// Close dropdown when clicking outside
-document.addEventListener('click', function(e) {
-  const profile = document.getElementById('nav-profile');
-  if (profile && !profile.contains(e.target)) {
-    dropdownOpen = false;
-    document.getElementById('nav-dropdown').classList.remove('open');
-  }
-});
+                if (!response.ok) {
+                    throw new Error("Unable to load campaigns");
+                }
 
-updateNav();
-</script>
+                const campaigns = await response.json();
 
+                if (!Array.isArray(campaigns)) {
+                    throw new Error("Campaign endpoint did not return an array");
+                }
 
-<!-- ── LOGIN PROMPT MODAL ── -->
-<div class="login-modal-bg" id="login-modal-bg" onclick="closeLoginPrompt(event)">
-  <div class="login-modal">
-    <div class="login-modal-icon">🔒</div>
-    <div class="login-modal-title">Login required</div>
-    <p class="login-modal-msg">You need to be logged in to do that. Please log in or create an account to continue.</p>
-    <div class="login-modal-btns">
-      <button class="login-modal-btn-primary" onclick="window.location.href='login.html'">Log in</button>
-      <button class="login-modal-btn-secondary" onclick="closeLoginPrompt()">Cancel</button>
-    </div>
-  </div>
-</div>
-<script src="session.js"></script>
+                return campaigns.map(campaign => this.convertDatabaseCampaign(campaign));
+            }
+
+            convertDatabaseCampaign(databaseCampaign) {
+                const campaignImage = this.normaliseCampaignImagePath(
+                    databaseCampaign.campaignImage
+                );
+
+                return {
+                    campaignId: databaseCampaign.campaignID,
+                    title: databaseCampaign.title || "Untitled Campaign",
+                    category: databaseCampaign.category || "Uncategorised",
+                    description: databaseCampaign.description || "",
+                    targetAmount: Number(databaseCampaign.targetAmount || 0),
+                    raisedAmount: Number(databaseCampaign.raisedAmount || 0),
+                    donorCount: Number(databaseCampaign.donorCount || 0),
+                    deadline: databaseCampaign.deadline,
+                    campaignImage: campaignImage
+                };
+            }
+
+            normaliseCampaignImagePath(imagePath) {
+                if (!imagePath) {
+                    return "";
+                }
+
+                let cleanedPath = String(imagePath).trim().replaceAll("\\", "/");
+
+                if (!cleanedPath) {
+                    return "";
+                }
+
+                if (cleanedPath.startsWith("data:image")) {
+                    return cleanedPath;
+                }
+
+                if (cleanedPath.startsWith("http://") || cleanedPath.startsWith("https://")) {
+                    return cleanedPath;
+                }
+
+                if (cleanedPath.startsWith("public/")) {
+                    cleanedPath = cleanedPath.replace(/^public/, "");
+                }
+
+                if (cleanedPath.includes("/public/")) {
+                    cleanedPath = cleanedPath.substring(cleanedPath.indexOf("/public/") + 7);
+                }
+
+                if (!cleanedPath.startsWith("/")) {
+                    cleanedPath = `/${cleanedPath}`;
+                }
+
+                return cleanedPath;
+            }
+
+            getUserCountryFilter() {
+                return (
+                    sessionStorage.getItem("userCountry") ||
+                    localStorage.getItem("userCountry") ||
+                    "all"
+                );
+            }
+        }
+
+        class HomeCampaignView {
+            constructor() {
+                this.featuredCampaignsElement = document.getElementById("featured-campaigns");
+            }
+
+            renderCampaigns(campaigns) {
+                this.featuredCampaignsElement.innerHTML = "";
+
+                if (campaigns.length === 0) {
+                    this.featuredCampaignsElement.innerHTML = `
+                        <p class="empty-message">
+                            No featured campaigns found.
+                        </p>
+                    `;
+                    return;
+                }
+
+                campaigns.slice(0, 3).forEach(campaign => {
+                    const card = document.createElement("article");
+                    card.className = "campaign-card";
+
+                    const progress = this.getProgressPercentage(campaign);
+                    const imageHtml = this.createCampaignImageHtml(campaign);
+
+                    card.innerHTML = `
+                        ${imageHtml}
+
+                        <div class="campaign-card-body">
+                            <p class="campaign-category">
+                                ${this.escapeHtml(campaign.category)}
+                            </p>
+
+                            <h3 class="campaign-title">
+                                ${this.escapeHtml(campaign.title)}
+                            </h3>
+
+                            <p class="campaign-description">
+                                ${this.escapeHtml(this.truncateText(campaign.description, 70))}
+                            </p>
+
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+
+                            <p class="campaign-raised">
+                                $${campaign.raisedAmount.toLocaleString()} raised
+                            </p>
+
+                            <div class="campaign-footer">
+                                <span>
+                                    $${campaign.targetAmount.toLocaleString()} goal
+                                    / ${campaign.donorCount} donors
+                                </span>
+
+                                <span>
+                                    ${this.escapeHtml(this.getDaysLeft(campaign.deadline))}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+
+                    card.addEventListener("click", () => {
+                        window.location.href =
+                            `viewCampaign.html?campaignId=${encodeURIComponent(campaign.campaignId)}`;
+                    });
+
+                    this.featuredCampaignsElement.appendChild(card);
+                });
+            }
+
+            createCampaignImageHtml(campaign) {
+                if (!campaign.campaignImage) {
+                    return `<div class="campaign-image-placeholder">🌍</div>`;
+                }
+
+                return `
+                    <img
+                        class="campaign-card-image"
+                        src="${this.escapeHtml(campaign.campaignImage)}"
+                        alt="${this.escapeHtml(campaign.title)} campaign image"
+                        onerror="this.outerHTML='<div class=&quot;campaign-image-placeholder&quot;>🌍</div>'"
+                    >
+                `;
+            }
+
+            renderError(message) {
+                this.featuredCampaignsElement.innerHTML = `
+                    <p class="error-message">${this.escapeHtml(message)}</p>
+                `;
+            }
+
+            getProgressPercentage(campaign) {
+                if (!campaign.targetAmount || campaign.targetAmount <= 0) {
+                    return 0;
+                }
+
+                return Math.min(
+                    100,
+                    Math.round((campaign.raisedAmount / campaign.targetAmount) * 100)
+                );
+            }
+
+            getDaysLeft(deadline) {
+                if (!deadline) {
+                    return "No deadline";
+                }
+
+                const deadlineDate = new Date(deadline);
+                const today = new Date();
+                const difference = deadlineDate.getTime() - today.getTime();
+                const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+                if (Number.isNaN(daysLeft)) {
+                    return "No deadline";
+                }
+
+                if (daysLeft < 0) {
+                    return "Deadline passed";
+                }
+
+                if (daysLeft === 1) {
+                    return "1 day left";
+                }
+
+                return `${daysLeft} days left`;
+            }
+
+            truncateText(text, maxLength) {
+                if (!text) {
+                    return "";
+                }
+
+                if (text.length <= maxLength) {
+                    return text;
+                }
+
+                return `${text.substring(0, maxLength)}...`;
+            }
+
+            escapeHtml(value) {
+                return String(value).replace(/[&<>'"]/g, character => ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    "'": "&#39;",
+                    '"': "&quot;"
+                }[character]));
+            }
+        }
+
+        class HomeCampaignController {
+            constructor(repository, view) {
+                this.repository = repository;
+                this.view = view;
+            }
+
+            async initialise() {
+                this.bindEvents();
+                await this.loadFeaturedCampaigns();
+            }
+
+            bindEvents() {
+                document.getElementById("home-search-form").addEventListener("submit", event => {
+                    event.preventDefault();
+
+                    const keyword = document.getElementById("home-search-input").value.trim();
+
+                    if (keyword) {
+                        window.location.href = `viewCampaign.html?search=${encodeURIComponent(keyword)}`;
+                    } else {
+                        window.location.href = "viewCampaign.html";
+                    }
+                });
+
+                document.querySelectorAll(".faq-question").forEach(button => {
+                    button.addEventListener("click", () => {
+                        const item = button.closest(".faq-item");
+                        item.classList.toggle("open");
+
+                        const symbol = button.querySelector("strong");
+                        symbol.textContent = item.classList.contains("open") ? "−" : "+";
+                    });
+                });
+
+                const feedbackMessage = document.getElementById("feedback-message");
+                const feedbackCount = document.getElementById("feedback-count");
+
+                feedbackMessage.addEventListener("input", () => {
+                    feedbackCount.textContent = `${feedbackMessage.value.length} / 300`;
+                });
+
+                document.getElementById("feedback-form").addEventListener("submit", event => {
+                    event.preventDefault();
+
+                    const message = feedbackMessage.value.trim();
+
+                    if (!message) {
+                        alert("Please enter your feedback message.");
+                        return;
+                    }
+
+                    alert("Thank you for your feedback!");
+                    event.target.reset();
+                    feedbackCount.textContent = "0 / 300";
+                });
+            }
+
+            async loadFeaturedCampaigns() {
+                try {
+                    const campaigns = await this.repository.getCampaigns();
+                    this.view.renderCampaigns(campaigns);
+                } catch (error) {
+                    console.error(error);
+                    this.view.renderError("Unable to load featured campaigns.");
+                }
+            }
+        }
+
+        class AccountDropdownController {
+            constructor() {
+                this.loginLink = document.getElementById("login-link");
+                this.signupLink = document.getElementById("signup-link");
+                this.accountMenu = document.getElementById("account-menu");
+                this.accountAvatar = document.getElementById("account-avatar");
+                this.accountDropdown = document.getElementById("account-dropdown");
+                this.dropdownUserName = document.getElementById("dropdown-user-name");
+                this.dropdownUserRole = document.getElementById("dropdown-user-role");
+                this.logoutButton = document.getElementById("logout-button");
+            }
+
+            initialise() {
+                this.renderAccountState();
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                this.accountAvatar.addEventListener("click", event => {
+                    event.stopPropagation();
+                    this.accountDropdown.classList.toggle("open");
+                });
+
+                document.addEventListener("click", event => {
+                    if (!this.accountMenu.contains(event.target)) {
+                        this.accountDropdown.classList.remove("open");
+                    }
+                });
+
+                this.logoutButton.addEventListener("click", () => {
+                    this.logout();
+                });
+            }
+
+            renderAccountState() {
+                const user = this.getCurrentUser();
+
+                if (user) {
+                    this.loginLink.style.display = "none";
+                    this.signupLink.style.display = "none";
+                    this.accountMenu.style.display = "block";
+
+                    this.accountAvatar.textContent = this.getInitials(user.name);
+                    this.dropdownUserName.textContent = user.name;
+                    this.dropdownUserRole.textContent = user.role;
+                } else {
+                    this.loginLink.style.display = "inline-flex";
+                    this.signupLink.style.display = "inline-flex";
+                    this.accountMenu.style.display = "none";
+                }
+            }
+
+            getCurrentUser() {
+                const possibleUserKeys = [
+                    "currentUser",
+                    "loggedInUser",
+                    "user",
+                    "sessionUser",
+                    "loggedInUserData"
+                ];
+
+                for (const key of possibleUserKeys) {
+                    const storedValue = sessionStorage.getItem(key) || localStorage.getItem(key);
+
+                    if (storedValue) {
+                        try {
+                            const user = JSON.parse(storedValue);
+
+                            return {
+                                name: user.name || user.username || user.fullName || user.displayName || "User",
+                                role: user.role || user.userType || user.accountType || "Donor"
+                            };
+                        } catch (error) {
+                            return {
+                                name: storedValue,
+                                role: "Donor"
+                            };
+                        }
+                    }
+                }
+
+                const username =
+                    sessionStorage.getItem("username") ||
+                    localStorage.getItem("username") ||
+                    sessionStorage.getItem("name") ||
+                    localStorage.getItem("name") ||
+                    sessionStorage.getItem("displayName") ||
+                    localStorage.getItem("displayName");
+
+                if (username) {
+                    return {
+                        name: username,
+                        role: sessionStorage.getItem("role") || localStorage.getItem("role") || "Donor"
+                    };
+                }
+
+                return null;
+            }
+
+            getInitials(name) {
+                return String(name)
+                    .trim()
+                    .split(" ")
+                    .filter(Boolean)
+                    .map(word => word[0])
+                    .join("")
+                    .substring(0, 2)
+                    .toUpperCase() || "U";
+            }
+
+            logout() {
+                sessionStorage.clear();
+
+                localStorage.removeItem("currentUser");
+                localStorage.removeItem("loggedInUser");
+                localStorage.removeItem("user");
+                localStorage.removeItem("sessionUser");
+                localStorage.removeItem("loggedInUserData");
+                localStorage.removeItem("username");
+                localStorage.removeItem("name");
+                localStorage.removeItem("displayName");
+                localStorage.removeItem("role");
+                localStorage.removeItem("userCountry");
+
+                window.location.href = "index.html";
+            }
+        }
+
+        const accountDropdownController = new AccountDropdownController();
+        accountDropdownController.initialise();
+
+        const homeCampaignRepository = new HomeCampaignRepository();
+        const homeCampaignView = new HomeCampaignView();
+        const homeCampaignController = new HomeCampaignController(
+            homeCampaignRepository,
+            homeCampaignView
+        );
+
+        homeCampaignController.initialise();
+    </script>
 </body>
 </html>

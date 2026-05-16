@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="darkmode.css">
+
 <style>
   .page { max-width: 580px; margin: 0 auto; padding: 2rem 1rem 4rem; }
   .header { text-align: center; margin-bottom: 2rem; }
@@ -18,7 +19,6 @@
   .btn-submit:hover { background: #27500A; }
   .btn-submit:active { transform: scale(0.98); }
 
-  /* Image upload */
   .upload-zone {
     border: 1.5px dashed var(--color-border-secondary, #d0d0d0);
     border-radius: var(--border-radius-md, 8px);
@@ -29,10 +29,13 @@
     position: relative;
     background: transparent;
   }
-  .upload-zone:hover, .upload-zone.drag-over {
+
+  .upload-zone:hover,
+  .upload-zone.drag-over {
     border-color: #3B6D11;
     background: rgba(59, 109, 17, 0.04);
   }
+
   .upload-zone input[type="file"] {
     position: absolute;
     inset: 0;
@@ -41,12 +44,12 @@
     width: 100%;
     height: 100%;
   }
+
   .upload-icon { font-size: 24px; color: var(--color-text-secondary); margin-bottom: 0.4rem; }
   .upload-text { font-size: 14px; color: var(--color-text-secondary); }
   .upload-text strong { color: var(--color-text-primary); font-weight: 500; }
   .upload-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; opacity: 0.7; }
 
-  /* Preview state */
   .upload-preview {
     display: none;
     position: relative;
@@ -54,12 +57,14 @@
     overflow: hidden;
     background: var(--color-background-secondary);
   }
+
   .upload-preview img {
     width: 100%;
     max-height: 220px;
     object-fit: cover;
     display: block;
   }
+
   .preview-remove {
     position: absolute;
     top: 8px;
@@ -77,7 +82,9 @@
     justify-content: center;
     transition: background 0.15s;
   }
+
   .preview-remove:hover { background: rgba(0,0,0,0.8); }
+
   .preview-filename {
     font-size: 12px;
     color: var(--color-text-secondary);
@@ -93,11 +100,8 @@
   .summary-row { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; }
   .summary-row span:first-child { color: var(--color-text-secondary); }
   .summary-row span:last-child { font-weight: 500; color: var(--color-text-primary); max-width: 60%; text-align: right; }
-
-  /* Campaign photo in summary */
   .summary-photo { width: 100%; border-radius: calc(var(--border-radius-md, 8px) - 2px); max-height: 160px; object-fit: cover; display: block; margin-bottom: 0.75rem; }
 
-  /* Captcha */
   .captcha-wrap { display: flex; align-items: center; gap: 16px; }
   .captcha-ascii { font-family: monospace; font-size: 13px; line-height: 1.35; background: var(--color-background-secondary); padding: 12px 16px; border-radius: var(--border-radius-md, 8px); color: var(--color-text-primary); white-space: pre; letter-spacing: 0.05em; user-select: none; }
   .captcha-right { display: flex; flex-direction: column; gap: 6px; }
@@ -105,13 +109,13 @@
   .captcha-wrap input { width: 80px; }
   .captcha-error { font-size: 12px; color: #c0392b; margin-top: 5px; display: none; }
 
-  /* Promote Campaign toggle */
   .promote-box {
     margin-top: 1.25rem;
     border: 1px solid var(--color-border-secondary, #d0d0d0);
     border-radius: var(--border-radius-md, 8px);
     overflow: hidden;
   }
+
   .promote-header {
     display: flex;
     align-items: flex-start;
@@ -119,10 +123,12 @@
     gap: 12px;
     padding: 14px 16px;
   }
+
   .promote-label-wrap { display: flex; align-items: flex-start; gap: 10px; }
   .promote-icon { font-size: 18px; color: #3B6D11; margin-top: 1px; flex-shrink: 0; }
   .promote-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
   .promote-desc { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+
   .promote-badge {
     font-size: 12px;
     font-weight: 500;
@@ -134,8 +140,9 @@
     flex-shrink: 0;
     margin-top: 2px;
   }
-  /* Yes/No pill toggle */
+
   .promote-toggle { display: flex; border-top: 1px solid var(--color-border-secondary, #d0d0d0); }
+
   .promote-opt {
     flex: 1;
     text-align: center;
@@ -149,11 +156,28 @@
     transition: background 0.15s, color 0.15s;
     font-family: inherit;
   }
+
   .promote-opt:first-child { border-right: 1px solid var(--color-border-secondary, #d0d0d0); }
   .promote-opt.active { background: #3B6D11; color: #EAF3DE; }
 
   .hidden { display: none; }
-  .btn-share { width: 100%; height: 42px; background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; font-size: 14px; color: var(--color-text-primary); display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s; }
+
+  .btn-share {
+    width: 100%;
+    height: 42px;
+    background: transparent;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+
   .btn-share:hover { background: var(--color-background-secondary); }
 </style>
 
@@ -168,14 +192,14 @@
 
     <div class="field">
       <label>Campaign title</label>
-      <input type="text" id="title" placeholder="e.g. Help us build a school library" />
+      <input type="text" id="title" placeholder="e.g. Help us build a school library">
     </div>
 
     <div class="field">
       <label>Fundraising goal ($)</label>
       <div class="currency-wrap">
         <span>$</span>
-        <input type="number" id="goal" placeholder="500" min="1" />
+        <input type="number" id="goal" placeholder="500" min="1">
       </div>
     </div>
 
@@ -186,239 +210,275 @@
 
     <div class="field">
       <label>Category <span class="hint">— max 30 characters</span></label>
-      <input type="text" id="category" placeholder="e.g. Medical, Disaster, Education" maxlength="30" />
-      <div style="font-size:12px; color:var(--color-text-secondary); margin-top:4px;"><span id="cat-count">0</span>/30</div>
+      <input type="text" id="category" placeholder="e.g. Medical, Disaster, Education" maxlength="30">
+      <div style="font-size:12px; color:var(--color-text-secondary); margin-top:4px;">
+        <span id="cat-count">0</span>/30
+      </div>
     </div>
 
     <div class="field">
       <label>Campaign deadline</label>
-      <input type="date" id="deadline" />
+      <input type="date" id="deadline">
     </div>
 
     <div class="field">
       <label>Your name <span class="hint">— campaign creator</span></label>
-      <input type="text" id="creator-name" placeholder="e.g. John Smith" />
+      <input type="text" id="creator-name" placeholder="e.g. John Smith">
     </div>
 
     <div class="field">
-      <label>Campaign photo <span class="hint">— optional, helps people connect with your cause</span></label>
+      <label>Campaign photo <span class="hint">— main campaign banner image</span></label>
 
-      <div class="upload-zone" id="upload-zone">
-        <input type="file" id="photo-input" accept="image/*" onchange="handlePhoto(this)" />
+      <div class="upload-zone" id="main-upload-zone">
+        <input type="file" id="photo-input" accept="image/*" onchange="handleUpload(this, 'main')">
         <div class="upload-icon"><i class="ti ti-photo" aria-hidden="true"></i></div>
         <div class="upload-text"><strong>Click to upload</strong> or drag and drop</div>
         <div class="upload-sub">JPG, PNG, GIF up to 10 MB</div>
       </div>
 
-      <div class="upload-preview" id="upload-preview">
-        <img id="preview-img" src="" alt="Campaign photo preview" />
-        <button class="preview-remove" onclick="removePhoto()" title="Remove photo">
-          <i class="ti ti-x" aria-hidden="true"></i>
-        </button>
-        <div class="preview-filename" id="preview-filename"></div>
+      <div class="upload-preview" id="main-upload-preview">
+        <img id="main-preview-img" src="" alt="Campaign photo preview">
+        <button class="preview-remove" onclick="removeUpload('main')" title="Remove photo" type="button">×</button>
+        <div class="preview-filename" id="main-preview-filename"></div>
       </div>
     </div>
 
+    <div class="field">
+      <label>Additional campaign image <span class="hint">— optional media image</span></label>
+
+      <div class="upload-zone" id="extra-upload-zone">
+        <input type="file" id="extra-image-input" accept="image/*" onchange="handleUpload(this, 'extra')">
+        <div class="upload-icon"><i class="ti ti-photo" aria-hidden="true"></i></div>
+        <div class="upload-text"><strong>Click to upload</strong> one more image</div>
+        <div class="upload-sub">JPG, PNG, GIF up to 10 MB</div>
+      </div>
+
+      <div class="upload-preview" id="extra-upload-preview">
+        <img id="extra-preview-img" src="" alt="Extra campaign image preview">
+        <button class="preview-remove" onclick="removeUpload('extra')" title="Remove photo" type="button">×</button>
+        <div class="preview-filename" id="extra-preview-filename"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Video thumbnail <span class="hint">— optional thumbnail image</span></label>
+
+      <div class="upload-zone" id="thumbnail-upload-zone">
+        <input type="file" id="video-thumbnail-input" accept="image/*" onchange="handleUpload(this, 'thumbnail')">
+        <div class="upload-icon"><i class="ti ti-photo" aria-hidden="true"></i></div>
+        <div class="upload-text"><strong>Click to upload</strong> video thumbnail</div>
+        <div class="upload-sub">JPG, PNG, GIF up to 10 MB</div>
+      </div>
+
+      <div class="upload-preview" id="thumbnail-upload-preview">
+        <img id="thumbnail-preview-img" src="" alt="Video thumbnail preview">
+        <button class="preview-remove" onclick="removeUpload('thumbnail')" title="Remove thumbnail" type="button">×</button>
+        <div class="preview-filename" id="thumbnail-preview-filename"></div>
+      </div>
+    </div>
+
+    <div class="field">
       <label>Campaign Region - your campaign will be promoted to those within your region</label>
-        <select id="country">
+      <select id="country">
         <option value="" selected disabled>-no selection-</option>
-            <option>Afghanistan</option>
-            <option>Albania</option>
-            <option>Algeria</option>
-            <option>Andorra</option>
-            <option>Angola</option>
-            <option>Antigua and Barbuda</option>
-            <option>Argentina</option>
-            <option>Armenia</option>
-            <option>Australia</option>
-            <option>Austria</option>
-            <option>Azerbaijan</option>
-            <option>Bahamas</option>
-            <option>Bahrain</option>
-            <option>Bangladesh</option>
-            <option>Barbados</option>
-            <option>Belarus</option>
-            <option>Belgium</option>
-            <option>Belize</option>
-            <option>Benin</option>
-            <option>Bhutan</option>
-            <option>Bolivia</option>
-            <option>Bosnia and Herzegovina</option>
-            <option>Botswana</option>
-            <option>Brazil</option>
-            <option>Brunei</option>
-            <option>Bulgaria</option>
-            <option>Burkina Faso</option>
-            <option>Burundi</option>
-            <option>Cabo Verde</option>
-            <option>Cambodia</option>
-            <option>Cameroon</option>
-            <option>Canada</option>
-            <option>Central African Republic</option>
-            <option>Chad</option>
-            <option>Chile</option>
-            <option>China</option>
-            <option>Colombia</option>
-            <option>Comoros</option>
-            <option>Congo</option>
-            <option>Costa Rica</option>
-            <option>Croatia</option>
-            <option>Cuba</option>
-            <option>Cyprus</option>
-            <option>Czech Republic</option>
-            <option>Democratic Republic of the Congo</option>
-            <option>Denmark</option>
-            <option>Djibouti</option>
-            <option>Dominica</option>
-            <option>Dominican Republic</option>
-            <option>Ecuador</option>
-            <option>Egypt</option>
-            <option>El Salvador</option>
-            <option>Equatorial Guinea</option>
-            <option>Eritrea</option>
-            <option>Estonia</option>
-            <option>Eswatini</option>
-            <option>Ethiopia</option>
-            <option>Fiji</option>
-            <option>Finland</option>
-            <option>France</option>
-            <option>Gabon</option>
-            <option>Gambia</option>
-            <option>Georgia</option>
-            <option>Germany</option>
-            <option>Ghana</option>
-            <option>Greece</option>
-            <option>Grenada</option>
-            <option>Guatemala</option>
-            <option>Guinea</option>
-            <option>Guinea-Bissau</option>
-            <option>Guyana</option>
-            <option>Haiti</option>
-            <option>Honduras</option>
-            <option>Hungary</option>
-            <option>Iceland</option>
-            <option>India</option>
-            <option>Indonesia</option>
-            <option>Iran</option>
-            <option>Iraq</option>
-            <option>Ireland</option>
-            <option>Israel</option>
-            <option>Italy</option>
-            <option>Ivory Coast</option>
-            <option>Jamaica</option>
-            <option>Japan</option>
-            <option>Jordan</option>
-            <option>Kazakhstan</option>
-            <option>Kenya</option>
-            <option>Kiribati</option>
-            <option>Kuwait</option>
-            <option>Kyrgyzstan</option>
-            <option>Laos</option>
-            <option>Latvia</option>
-            <option>Lebanon</option>
-            <option>Lesotho</option>
-            <option>Liberia</option>
-            <option>Libya</option>
-            <option>Liechtenstein</option>
-            <option>Lithuania</option>
-            <option>Luxembourg</option>
-            <option>Madagascar</option>
-            <option>Malawi</option>
-            <option>Malaysia</option>
-            <option>Maldives</option>
-            <option>Mali</option>
-            <option>Malta</option>
-            <option>Marshall Islands</option>
-            <option>Mauritania</option>
-            <option>Mauritius</option>
-            <option>Mexico</option>
-            <option>Micronesia</option>
-            <option>Moldova</option>
-            <option>Monaco</option>
-            <option>Mongolia</option>
-            <option>Montenegro</option>
-            <option>Morocco</option>
-            <option>Mozambique</option>
-            <option>Myanmar</option>
-            <option>Namibia</option>
-            <option>Nauru</option>
-            <option>Nepal</option>
-            <option>Netherlands</option>
-            <option>New Zealand</option>
-            <option>Nicaragua</option>
-            <option>Niger</option>
-            <option>Nigeria</option>
-            <option>North Korea</option>
-            <option>North Macedonia</option>
-            <option>Norway</option>
-            <option>Oman</option>
-            <option>Pakistan</option>
-            <option>Palau</option>
-            <option>Palestine</option>
-            <option>Panama</option>
-            <option>Papua New Guinea</option>
-            <option>Paraguay</option>
-            <option>Peru</option>
-            <option>Philippines</option>
-            <option>Poland</option>
-            <option>Portugal</option>
-            <option>Qatar</option>
-            <option>Romania</option>
-            <option>Russia</option>
-            <option>Rwanda</option>
-            <option>Saint Kitts and Nevis</option>
-            <option>Saint Lucia</option>
-            <option>Saint Vincent and the Grenadines</option>
-            <option>Samoa</option>
-            <option>San Marino</option>
-            <option>Sao Tome and Principe</option>
-            <option>Saudi Arabia</option>
-            <option>Senegal</option>
-            <option>Serbia</option>
-            <option>Seychelles</option>
-            <option>Sierra Leone</option>
-            <option>Singapore</option>
-            <option>Slovakia</option>
-            <option>Slovenia</option>
-            <option>Solomon Islands</option>
-            <option>Somalia</option>
-            <option>South Africa</option>
-            <option>South Korea</option>
-            <option>South Sudan</option>
-            <option>Spain</option>
-            <option>Sri Lanka</option>
-            <option>Sudan</option>
-            <option>Suriname</option>
-            <option>Sweden</option>
-            <option>Switzerland</option>
-            <option>Syria</option>
-            <option>Taiwan</option>
-            <option>Tajikistan</option>
-            <option>Tanzania</option>
-            <option>Thailand</option>
-            <option>Timor-Leste</option>
-            <option>Togo</option>
-            <option>Tonga</option>
-            <option>Trinidad and Tobago</option>
-            <option>Tunisia</option>
-            <option>Turkey</option>
-            <option>Turkmenistan</option>
-            <option>Tuvalu</option>
-            <option>Uganda</option>
-            <option>Ukraine</option>
-            <option>United Arab Emirates</option>
-            <option>United Kingdom</option>
-            <option>United States</option>
-            <option>Uruguay</option>
-            <option>Uzbekistan</option>
-            <option>Vanuatu</option>
-            <option>Vatican City</option>
-            <option>Venezuela</option>
-            <option>Vietnam</option>
-            <option>Yemen</option>
-            <option>Zambia</option>
-            <option>Zimbabwe</option>
-    </select>
+        <option>Afghanistan</option>
+        <option>Albania</option>
+        <option>Algeria</option>
+        <option>Andorra</option>
+        <option>Angola</option>
+        <option>Antigua and Barbuda</option>
+        <option>Argentina</option>
+        <option>Armenia</option>
+        <option>Australia</option>
+        <option>Austria</option>
+        <option>Azerbaijan</option>
+        <option>Bahamas</option>
+        <option>Bahrain</option>
+        <option>Bangladesh</option>
+        <option>Barbados</option>
+        <option>Belarus</option>
+        <option>Belgium</option>
+        <option>Belize</option>
+        <option>Benin</option>
+        <option>Bhutan</option>
+        <option>Bolivia</option>
+        <option>Bosnia and Herzegovina</option>
+        <option>Botswana</option>
+        <option>Brazil</option>
+        <option>Brunei</option>
+        <option>Bulgaria</option>
+        <option>Burkina Faso</option>
+        <option>Burundi</option>
+        <option>Cabo Verde</option>
+        <option>Cambodia</option>
+        <option>Cameroon</option>
+        <option>Canada</option>
+        <option>Central African Republic</option>
+        <option>Chad</option>
+        <option>Chile</option>
+        <option>China</option>
+        <option>Colombia</option>
+        <option>Comoros</option>
+        <option>Congo</option>
+        <option>Costa Rica</option>
+        <option>Croatia</option>
+        <option>Cuba</option>
+        <option>Cyprus</option>
+        <option>Czech Republic</option>
+        <option>Democratic Republic of the Congo</option>
+        <option>Denmark</option>
+        <option>Djibouti</option>
+        <option>Dominica</option>
+        <option>Dominican Republic</option>
+        <option>Ecuador</option>
+        <option>Egypt</option>
+        <option>El Salvador</option>
+        <option>Equatorial Guinea</option>
+        <option>Eritrea</option>
+        <option>Estonia</option>
+        <option>Eswatini</option>
+        <option>Ethiopia</option>
+        <option>Fiji</option>
+        <option>Finland</option>
+        <option>France</option>
+        <option>Gabon</option>
+        <option>Gambia</option>
+        <option>Georgia</option>
+        <option>Germany</option>
+        <option>Ghana</option>
+        <option>Greece</option>
+        <option>Grenada</option>
+        <option>Guatemala</option>
+        <option>Guinea</option>
+        <option>Guinea-Bissau</option>
+        <option>Guyana</option>
+        <option>Haiti</option>
+        <option>Honduras</option>
+        <option>Hungary</option>
+        <option>Iceland</option>
+        <option>India</option>
+        <option>Indonesia</option>
+        <option>Iran</option>
+        <option>Iraq</option>
+        <option>Ireland</option>
+        <option>Israel</option>
+        <option>Italy</option>
+        <option>Ivory Coast</option>
+        <option>Jamaica</option>
+        <option>Japan</option>
+        <option>Jordan</option>
+        <option>Kazakhstan</option>
+        <option>Kenya</option>
+        <option>Kiribati</option>
+        <option>Kuwait</option>
+        <option>Kyrgyzstan</option>
+        <option>Laos</option>
+        <option>Latvia</option>
+        <option>Lebanon</option>
+        <option>Lesotho</option>
+        <option>Liberia</option>
+        <option>Libya</option>
+        <option>Liechtenstein</option>
+        <option>Lithuania</option>
+        <option>Luxembourg</option>
+        <option>Madagascar</option>
+        <option>Malawi</option>
+        <option>Malaysia</option>
+        <option>Maldives</option>
+        <option>Mali</option>
+        <option>Malta</option>
+        <option>Marshall Islands</option>
+        <option>Mauritania</option>
+        <option>Mauritius</option>
+        <option>Mexico</option>
+        <option>Micronesia</option>
+        <option>Moldova</option>
+        <option>Monaco</option>
+        <option>Mongolia</option>
+        <option>Montenegro</option>
+        <option>Morocco</option>
+        <option>Mozambique</option>
+        <option>Myanmar</option>
+        <option>Namibia</option>
+        <option>Nauru</option>
+        <option>Nepal</option>
+        <option>Netherlands</option>
+        <option>New Zealand</option>
+        <option>Nicaragua</option>
+        <option>Niger</option>
+        <option>Nigeria</option>
+        <option>North Korea</option>
+        <option>North Macedonia</option>
+        <option>Norway</option>
+        <option>Oman</option>
+        <option>Pakistan</option>
+        <option>Palau</option>
+        <option>Palestine</option>
+        <option>Panama</option>
+        <option>Papua New Guinea</option>
+        <option>Paraguay</option>
+        <option>Peru</option>
+        <option>Philippines</option>
+        <option>Poland</option>
+        <option>Portugal</option>
+        <option>Qatar</option>
+        <option>Romania</option>
+        <option>Russia</option>
+        <option>Rwanda</option>
+        <option>Saint Kitts and Nevis</option>
+        <option>Saint Lucia</option>
+        <option>Saint Vincent and the Grenadines</option>
+        <option>Samoa</option>
+        <option>San Marino</option>
+        <option>Sao Tome and Principe</option>
+        <option>Saudi Arabia</option>
+        <option>Senegal</option>
+        <option>Serbia</option>
+        <option>Seychelles</option>
+        <option>Sierra Leone</option>
+        <option>Singapore</option>
+        <option>Slovakia</option>
+        <option>Slovenia</option>
+        <option>Solomon Islands</option>
+        <option>Somalia</option>
+        <option>South Africa</option>
+        <option>South Korea</option>
+        <option>South Sudan</option>
+        <option>Spain</option>
+        <option>Sri Lanka</option>
+        <option>Sudan</option>
+        <option>Suriname</option>
+        <option>Sweden</option>
+        <option>Switzerland</option>
+        <option>Syria</option>
+        <option>Taiwan</option>
+        <option>Tajikistan</option>
+        <option>Tanzania</option>
+        <option>Thailand</option>
+        <option>Timor-Leste</option>
+        <option>Togo</option>
+        <option>Tonga</option>
+        <option>Trinidad and Tobago</option>
+        <option>Tunisia</option>
+        <option>Turkey</option>
+        <option>Turkmenistan</option>
+        <option>Tuvalu</option>
+        <option>Uganda</option>
+        <option>Ukraine</option>
+        <option>United Arab Emirates</option>
+        <option>United Kingdom</option>
+        <option>United States</option>
+        <option>Uruguay</option>
+        <option>Uzbekistan</option>
+        <option>Vanuatu</option>
+        <option>Vatican City</option>
+        <option>Venezuela</option>
+        <option>Vietnam</option>
+        <option>Yemen</option>
+        <option>Zambia</option>
+        <option>Zimbabwe</option>
+      </select>
+    </div>
 
     <div class="promote-box">
       <div class="promote-header">
@@ -430,9 +490,10 @@
           </div>
         </div>
       </div>
+
       <div class="promote-toggle">
-        <button class="promote-opt" id="promote-yes" onclick="setPromote(true)">✓ Yes, promote it!</button>
-        <button class="promote-opt active" id="promote-no" onclick="setPromote(false)">No thanks</button>
+        <button class="promote-opt" id="promote-yes" onclick="setPromote(true)" type="button">✓ Yes, promote it!</button>
+        <button class="promote-opt active" id="promote-no" onclick="setPromote(false)" type="button">No thanks</button>
       </div>
     </div>
 
@@ -442,31 +503,28 @@
         <div class="captcha-ascii" id="captcha-ascii"></div>
         <div class="captcha-right">
           <span class="captcha-prompt">What number is this?</span>
-          <input type="number" id="captcha-answer" placeholder="?" min="0" max="9" />
+          <input type="number" id="captcha-answer" placeholder="?" min="0" max="9">
         </div>
       </div>
       <div class="captcha-error" id="captcha-error">Incorrect — please look again.</div>
     </div>
 
-    <button class="btn-submit" onclick="launch()">
+    <button class="btn-submit" onclick="launch()" type="button">
       <i class="ti ti-rocket" aria-hidden="true"></i> Launch my campaign
     </button>
 
-<label>
-  <input type="checkbox" id="dark-toggle"> Dark mode
-</label>
-
-<script src="darkmode.js"></script>
-
+    <label>
+      <input type="checkbox" id="dark-toggle"> Dark mode
+    </label>
   </div>
 
   <div id="success-view" class="hidden">
     <div class="success">
       <div class="big-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
       <h2>Your campaign is live!</h2>
+
       <div class="summary">
-        <img id="s-photo" class="summary-photo hidden" src="" alt="Campaign photo" />
-        <!-- <div class="summary-row"><span>Campaign ID</span><span id="s-id">—</span></div> -->
+        <img id="s-photo" class="summary-photo hidden" src="" alt="Campaign photo">
         <div class="summary-row"><span>Title</span><span id="s-title">—</span></div>
         <div class="summary-row"><span>Category</span><span id="s-category">—</span></div>
         <div class="summary-row"><span>Goal</span><span id="s-goal">—</span></div>
@@ -478,174 +536,236 @@
 </div>
 
 <script src="darkmode.js"></script>
+
 <script>
-  let photoDataUrl = null;
+  const uploadState = {
+    main: null,
+    extra: null,
+    thumbnail: null
+  };
+
   let captchaAnswer = 0;
   let promoteSelected = false;
 
   function setPromote(yes) {
     promoteSelected = yes;
-    document.getElementById('promote-yes').classList.toggle('active', yes);
-    document.getElementById('promote-no').classList.toggle('active', !yes);
+    document.getElementById("promote-yes").classList.toggle("active", yes);
+    document.getElementById("promote-no").classList.toggle("active", !yes);
   }
 
   const ASCII_DIGITS = [
-    // 0
     " _ \n| |\n|_|",
-    // 1
     "   \n  |\n  |",
-    // 2
     " _ \n _|\n|_ ",
-    // 3
     " _ \n _|\n _|",
-    // 4
     "   \n|_|\n  |",
-    // 5
     " _ \n|_ \n _|",
-    // 6
     " _ \n|_ \n|_|",
-    // 7
     " _ \n  |\n  |",
-    // 8
     " _ \n|_|\n|_|",
-    // 9
-    " _ \n|_|\n _|",
+    " _ \n|_|\n _|"
   ];
 
   function generateCaptcha() {
     captchaAnswer = Math.floor(Math.random() * 10);
-    document.getElementById('captcha-ascii').textContent = ASCII_DIGITS[captchaAnswer];
-    document.getElementById('captcha-answer').value = '';
-    document.getElementById('captcha-error').style.display = 'none';
+    document.getElementById("captcha-ascii").textContent = ASCII_DIGITS[captchaAnswer];
+    document.getElementById("captcha-answer").value = "";
+    document.getElementById("captcha-error").style.display = "none";
   }
+
   generateCaptcha();
 
-  // Drag-and-drop support
-  const zone = document.getElementById('upload-zone');
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-  zone.addEventListener('drop', e => {
-    e.preventDefault();
-    zone.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) loadPhoto(file);
-  });
+  function setupDragAndDrop(type, zoneId, inputId) {
+    const zone = document.getElementById(zoneId);
+    const input = document.getElementById(inputId);
 
-  function handlePhoto(input) {
-    if (input.files && input.files[0]) loadPhoto(input.files[0]);
+    zone.addEventListener("dragover", event => {
+      event.preventDefault();
+      zone.classList.add("drag-over");
+    });
+
+    zone.addEventListener("dragleave", () => {
+      zone.classList.remove("drag-over");
+    });
+
+    zone.addEventListener("drop", event => {
+      event.preventDefault();
+      zone.classList.remove("drag-over");
+
+      const file = event.dataTransfer.files[0];
+
+      if (file && file.type.startsWith("image/")) {
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        input.files = dataTransfer.files;
+        loadUploadPreview(file, type);
+      }
+    });
   }
 
-  function loadPhoto(file) {
+  setupDragAndDrop("main", "main-upload-zone", "photo-input");
+  setupDragAndDrop("extra", "extra-upload-zone", "extra-image-input");
+  setupDragAndDrop("thumbnail", "thumbnail-upload-zone", "video-thumbnail-input");
+
+  function handleUpload(input, type) {
+    if (input.files && input.files[0]) {
+      loadUploadPreview(input.files[0], type);
+    }
+  }
+
+  function loadUploadPreview(file, type) {
+    if (!file.type.startsWith("image/")) {
+      alert("Please upload an image file.");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert("Image must be 10 MB or smaller.");
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onload = e => {
-      photoDataUrl = e.target.result;
-      document.getElementById('preview-img').src = photoDataUrl;
-      document.getElementById('preview-filename').textContent = file.name;
-      document.getElementById('upload-zone').style.display = 'none';
-      document.getElementById('upload-preview').style.display = 'block';
+
+    reader.onload = event => {
+      uploadState[type] = event.target.result;
+
+      document.getElementById(`${type}-preview-img`).src = uploadState[type];
+      document.getElementById(`${type}-preview-filename`).textContent = file.name;
+      document.getElementById(`${type}-upload-zone`).style.display = "none";
+      document.getElementById(`${type}-upload-preview`).style.display = "block";
     };
+
     reader.readAsDataURL(file);
   }
 
-  function removePhoto() {
-    photoDataUrl = null;
-    document.getElementById('photo-input').value = '';
-    document.getElementById('preview-img').src = '';
-    document.getElementById('upload-preview').style.display = 'none';
-    document.getElementById('upload-zone').style.display = 'block';
+  function removeUpload(type) {
+    uploadState[type] = null;
+
+    const inputMap = {
+      main: "photo-input",
+      extra: "extra-image-input",
+      thumbnail: "video-thumbnail-input"
+    };
+
+    document.getElementById(inputMap[type]).value = "";
+    document.getElementById(`${type}-preview-img`).src = "";
+    document.getElementById(`${type}-upload-preview`).style.display = "none";
+    document.getElementById(`${type}-upload-zone`).style.display = "block";
   }
 
-  // Character counter for category
-  document.getElementById('category').addEventListener('input', function() {
-    document.getElementById('cat-count').textContent = this.value.length;
+  document.getElementById("category").addEventListener("input", function () {
+    document.getElementById("cat-count").textContent = this.value.length;
   });
 
   async function launch() {
-    const title = document.getElementById('title').value.trim();
-    const goal = document.getElementById('goal').value;
-    const story = document.getElementById('story').value.trim();
-    const category = document.getElementById('category').value.trim();
-    const deadline = document.getElementById('deadline').value;
-    const creatorName = document.getElementById('creator-name').value.trim();
-    const country = document.getElementById('country').value;
-    const userAnswer = parseInt(document.getElementById('captcha-answer').value, 10);
+    const title = document.getElementById("title").value.trim();
+    const goal = document.getElementById("goal").value;
+    const story = document.getElementById("story").value.trim();
+    const category = document.getElementById("category").value.trim();
+    const deadline = document.getElementById("deadline").value;
+    const creatorName = document.getElementById("creator-name").value.trim();
+    const country = document.getElementById("country").value;
+    const userAnswer = parseInt(document.getElementById("captcha-answer").value, 10);
 
     if (!title || !goal || !story) {
-      alert('Please fill in your campaign title, goal and description.');
+      alert("Please fill in your campaign title, goal and description.");
       return;
     }
+
     if (!category) {
-      alert('Please enter a category.');
+      alert("Please enter a category.");
       return;
     }
+
     if (!deadline) {
-      alert('Please select a deadline.');
+      alert("Please select a deadline.");
       return;
     }
-    // Check deadline is in the future
+
     if (new Date(deadline) <= new Date()) {
-      alert('Deadline must be a future date.');
+      alert("Deadline must be a future date.");
       return;
     }
+
     if (!creatorName) {
-      alert('Please enter your name.');
+      alert("Please enter your name.");
       return;
     }
-    if (!country || country === '-no selection-') {
-      alert('Please select a country.');
+
+    if (!country || country === "-no selection-") {
+      alert("Please select a country.");
       return;
     }
+
     if (isNaN(userAnswer) || userAnswer !== captchaAnswer) {
-      document.getElementById('captcha-error').style.display = 'block';
+      document.getElementById("captcha-error").style.display = "block";
       generateCaptcha();
       return;
     }
 
-    // For testing without backend, we can skip the fetch and directly show success
     try {
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("country", country);
+      formData.append("category", category);
+      formData.append("description", story);
+      formData.append("targetAmount", goal);
+      formData.append("deadline", deadline);
+      formData.append("createdBy", creatorName);
+
+      const mainPhotoInput = document.getElementById("photo-input");
+      const extraImageInput = document.getElementById("extra-image-input");
+      const videoThumbnailInput = document.getElementById("video-thumbnail-input");
+
+      if (mainPhotoInput && mainPhotoInput.files.length > 0) {
+        formData.append("campaignImage", mainPhotoInput.files[0]);
+      }
+
+      if (extraImageInput && extraImageInput.files.length > 0) {
+        formData.append("campaignExtraImage", extraImageInput.files[0]);
+      }
+
+      if (videoThumbnailInput && videoThumbnailInput.files.length > 0) {
+        formData.append("campaignVideoThumbnail", videoThumbnailInput.files[0]);
+      }
+
       const res = await fetch("http://localhost:8080/createCampaign", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          country,
-          category,
-          description: story,
-          targetAmount: goal,
-          deadline,
-          createdBy: creatorName
-        })
+        body: formData
       });
 
       const data = await res.json();
 
       if (!data.success) {
-        alert(data.message || 'Something went wrong. Please try again.');
+        alert(data.message || "Something went wrong. Please try again.");
         return;
       }
+
     } catch (err) {
-      alert('Could not connect to server. Make sure the server is running.');
+      console.error(err);
+      alert("Could not connect to server. Make sure the server is running.");
       return;
     }
 
-    // Update success summary
-    document.getElementById('s-title').textContent = title;
-    document.getElementById('s-category').textContent = category;
-    document.getElementById('s-goal').textContent = '$' + Number(goal).toLocaleString();
-    document.getElementById('s-deadline').textContent = new Date(deadline).toLocaleDateString();
-    document.getElementById('s-creator').textContent = creatorName;
+    document.getElementById("s-title").textContent = title;
+    document.getElementById("s-category").textContent = category;
+    document.getElementById("s-goal").textContent = "$" + Number(goal).toLocaleString();
+    document.getElementById("s-deadline").textContent = new Date(deadline).toLocaleDateString();
+    document.getElementById("s-creator").textContent = creatorName;
 
-    // Show photo in summary if uploaded
-    const sPhoto = document.getElementById('s-photo');
-    if (photoDataUrl) {
-      sPhoto.src = photoDataUrl;
-      sPhoto.classList.remove('hidden');
+    const sPhoto = document.getElementById("s-photo");
+
+    if (uploadState.main) {
+      sPhoto.src = uploadState.main;
+      sPhoto.classList.remove("hidden");
     } else {
-      sPhoto.classList.add('hidden');
+      sPhoto.classList.add("hidden");
     }
 
-    document.getElementById('form-view').classList.add('hidden');
-    document.getElementById('success-view').classList.remove('hidden');
+    document.getElementById("form-view").classList.add("hidden");
+    document.getElementById("success-view").classList.remove("hidden");
   }
 </script>
+
 <script src="session.js"></script>
