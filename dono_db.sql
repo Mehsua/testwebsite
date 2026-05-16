@@ -13,8 +13,7 @@ create table dono_accounts
 
 -- Placeholder accounts
 insert into dono_accounts (username, password, country) values
-    ("BryanWonggg", "iliketurtles67", "Saudi Arabia"),
-    ("Bobby123", "12345678", "Singapore");
+    ("User", "1234", "Saudi Arabia");
 
 -- Admin account
 insert into dono_accounts (username, password, country, role) values
@@ -122,13 +121,12 @@ INSERT INTO Admin VALUES ('U015');
 
 -- Campaign
 INSERT INTO Campaign
-VALUES ('C001', 'Nepal Relief', 'Nepal' 'Disaster', 'Help earthquake victims in Nepal', 50000.00, '2026-12-31', 'Open', 'U001');
+VALUES ('C001', 'Nepal Relief', 'Nepal', 'Disaster', 'Help earthquake victims in Nepal', 50000.00, '2026-12-31', 'Open', 'U001');
 
 INSERT INTO Campaign
-VALUES (
-'C002',
+VALUES ('C002',
 'Cancer Treatment Fund',
-'Singapore'
+'Singapore',
 'Medical',
 'Support John cancer treatment',
 30000.00,
@@ -141,7 +139,7 @@ INSERT INTO Campaign
 VALUES (
 'C003',
 'Feed Hungry Children',
-'South Africa'
+'Saudi Arabia',
 'Charity',
 'Provide meals for children',
 20000.00,
@@ -154,7 +152,7 @@ INSERT INTO Campaign
 VALUES (
 'C004',
 'Flood Victim Support',
-'Nepal'
+'Saudi Arabia',
 'Disaster',
 'Help flood victims rebuild homes',
 45000.00,
@@ -167,7 +165,7 @@ INSERT INTO Campaign
 VALUES (
 'C005',
 'School Scholarship Fund',
-'Singapore'
+'Singapore',
 'Education',
 'Scholarships for poor students',
 25000.00,

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Fundraiser</title>
+<title>Dono</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -396,6 +396,189 @@ nav {
 .faq-item.active .faq-icon {
   transform: rotate(45deg); /* Turns + into x */
 }
+
+/* ── PROFILE DROPDOWN ── */
+.nav-profile {
+  position: relative;
+  display: none;
+  flex-shrink: 0;
+}
+
+.profile-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  transition: opacity .15s;
+}
+
+.profile-btn:hover { opacity: .8; }
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 200px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.10);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: all .18s;
+  z-index: 200;
+}
+
+.dropdown.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dropdown-username {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dropdown-role {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background .12s;
+  text-decoration: none;
+}
+
+.dropdown-item:hover { background: var(--surface); }
+
+.dropdown-icon {
+  font-size: 15px;
+  width: 18px;
+  text-align: center;
+}
+
+.dropdown-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 4px 0;
+}
+
+.dropdown-logout { color: var(--text2); }
+
+
+/* ── LOGIN PROMPT MODAL ── */
+.login-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+
+.login-modal-bg.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.login-modal {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 28px 22px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  transform: translateY(-8px);
+  transition: transform .2s;
+}
+
+.login-modal-bg.open .login-modal {
+  transform: translateY(0);
+}
+
+.login-modal-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.login-modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.login-modal-msg {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.login-modal-btns {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.login-modal-btn-primary {
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.login-modal-btn-primary:hover { background: var(--text2); }
+
+.login-modal-btn-secondary {
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.login-modal-btn-secondary:hover { background: var(--surface); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .camp-grid {
@@ -432,14 +615,43 @@ nav {
 
 <nav>
   <div class="nav-inner">
-    <div class="nav-logo">Fundraiser</div>
+    <div class="nav-logo">Dono</div>
     <div class="nav-search">
       <input class="nav-search-input" type="text" id="search-input" placeholder="Search campaigns..." onkeydown="if(event.key==='Enter')doSearch()"/>
       <button class="nav-search-btn" onclick="doSearch()">Search</button>
     </div>
-    <div class="nav-auth">
-      <button class="btn-login">Log in</button>
-      <button class="btn-signup">Sign up</button>
+    <div class="nav-auth" id="nav-auth">
+      <button class="btn-login" onclick="window.location.href='login.html'">Log in</button>
+      <button class="btn-signup" onclick="window.location.href='login.html'">Sign up</button>
+    </div>
+
+    <div class="nav-profile" id="nav-profile">
+      <div class="profile-btn" id="nav-avatar" onclick="toggleDropdown()">?</div>
+      <div class="dropdown" id="nav-dropdown">
+        <div class="dropdown-header">
+          <div class="dropdown-username" id="dropdown-username"></div>
+          <div class="dropdown-role" id="dropdown-role"></div>
+        </div>
+        <a class="dropdown-item" href="index.html">
+          <span class="dropdown-icon">🏠</span> Home
+        </a>
+        <a class="dropdown-item" href="viewCampaign.html">
+          <span class="dropdown-icon">🎯</span> View Campaigns
+        </a>
+        <a class="dropdown-item" href="campaign_creation_page.html">
+          <span class="dropdown-icon">✏️</span> Create Campaign
+        </a>
+        <a class="dropdown-item" href="donation-history.html">
+          <span class="dropdown-icon">📋</span> Donation History
+        </a>
+        <a class="dropdown-item" href="campaign-history.html">
+          <span class="dropdown-icon">📁</span> Campaign History
+        </a>
+        <hr class="dropdown-divider"/>
+        <div class="dropdown-item dropdown-logout" onclick="logout()">
+          <span class="dropdown-icon">🚪</span> Log out
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -450,7 +662,7 @@ nav {
     <div class="hero-title">Fundraiser slogan</div>
     <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <a class="hero-btn" href="">Donate</a> <!-- ADD HTML HERE WHEN DONE-->
+    <a class="hero-btn" href="" onclick="requireLogin(event, '')">Donate</a> <!-- ADD HTML HERE WHEN DONE-->
   </div>
 
   <div class="section">
@@ -463,7 +675,7 @@ nav {
 
   <div class="cta">
     <div class="cta-title">Start your own fundraiser today</div>
-    <a class="cta-btn" href="">Start a fundraiser</a><!-- ADD HTML HERE WHEN DONE-->
+    <a class="cta-btn" href="" onclick="requireLogin(event, 'campaign_creation_page.html')">Start a fundraiser</a><!-- ADD HTML HERE WHEN DONE-->
   </div>
 
   <div class="section">
@@ -530,11 +742,11 @@ nav {
 </div>
 
 <script>
-const campaigns = [
-  { id:1, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:259, goal:1000, deadline:"2025-06-01", donors:16 },
-  { id:2, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:256, goal:1000, deadline:"2025-06-01", donors:16 },
-  { id:3, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:266, goal:1000, deadline:"2025-06-01", donors:16 },
-];
+//const campaigns = [
+  //{ id:1, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:259, goal:1000, deadline:"2025-06-01", donors:16 },
+  //{ id:2, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:256, goal:1000, deadline:"2025-06-01", donors:16 },
+  //{ id:3, title:"Placeholder title",   cat:"Category", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", raised:266, goal:1000, deadline:"2025-06-01", donors:16 },
+//];
 // function doSearch() {
 //   const kw = document.getElementById('search-input').value.trim();
 //   window.location.href = kw ? 'discover.html?q=' + encodeURIComponent(kw) : 'discover.html';
@@ -550,46 +762,71 @@ function toggleFaq(btn) {
   // Toggle the clicked item
   item.classList.toggle('active');
 }
-async function loadCampaigns() {
+async function loadCampaign() {
   // Get the country saved during account creation
-const savedCountry = localStorage.getItem('userCountry');
-  try {
+  const container = document.getElementById('featured-grid');
+  const savedCountry = localStorage.getItem('userCountry');
       // We call the backend WITHOUT a URL parameter
-      const res = await fetch("http://localhost:8080/getCampaigns", {
+      try {
+    const res = await fetch("http://localhost:8080/getCampaign", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          // We send the country in a secret header instead
-          "x-user-country": savedCountry || "all"
+            "Content-Type": "application/json",
+            "x-user-country": savedCountry || "all"
         }
-      });
+    });
 
-      if (!res.ok) throw new Error("Server error");
-        const campaigns = await res.json();
+    if (!res.ok) throw new Error("Server error");
+    const campaign = await res.json();
+    console.log("RAW DATA FROM SERVER:", campaign[0]);
 
-        if (campaigns.length === 0) {
-            document.getElementById('featured-grid').innerHTML = `<p>No campaigns found in ${savedCountry || 'your area'}.</p>`;
-            return;
-        }
-    
-  document.getElementById('featured-grid').innerHTML = campaigns.slice(0, 3).map(c => {
-  const pct  = Math.min(100, Math.round(c.raised / c.goal * 100));
-  const days = Math.max(0, Math.round((new Date(c.deadline) - Date.now()) / 86400000));
-  return `<div class="camp-card">
-    <div class="camp-img"></div>
-    <div class="camp-body">
-      <div class="camp-cat">${c.cat}</div>
-      <div class="camp-title" onclick="location.href='campaign.html'">${c.title}</div>
-      <div class="camp-desc">${c.desc.slice(0, 88)}…</div>
-      <div class="camp-prog-wrap"><div class="camp-prog-fill" style="width:${pct}%"></div></div>
-      <div class="camp-raised">$${c.raised.toLocaleString()} raised</div>
-      <div class="camp-meta">
-        <span>$${c.goal.toLocaleString()} goal / ${c.donors} donors</span>
-        <span>${days > 0 ? days + ' days left' : 'Ended'}</span>
-      </div>
-    </div>
-  </div>`;
-}).join('');
+    if (campaign.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text3); padding: 40px;">
+            No active campaigns found in ${savedCountry || 'your area'}.
+        </p>`;
+        return;
+    }
+
+    container.innerHTML = campaign.slice(0, 3).map(c => {
+        // BRIDGE: Fixed naming consistency
+        const raised = Number(c.raisedAmount) || 0;
+        const goal = Number(c.targetAmount) || 0; // Changed to 'goal' to match logic below
+        const donors = c.donorCount || 0; // Added this line so ${donors} works
+        const title = c.title || "Untitled Campaign";
+        const category = c.category || "General";
+        const description = c.description || "";
+
+        // Calculation Logic
+        const pct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
+        const days = Math.max(0, Math.round((new Date(c.deadline) - Date.now()) / 86400000));
+
+        return `
+        <div class="camp-card">
+            <div class="camp-img">🌍</div>
+            <div class="camp-body">
+                <div class="camp-cat">${category}</div>
+                <div class="camp-title" onclick="location.href='viewCampaign.html?id=${c.campaignID}'">${title}</div>
+                <div class="camp-desc">${description.slice(0, 88)}...</div>
+                <div class="camp-prog-wrap">
+                    <div class="camp-prog-fill" style="width:${pct}%"></div>
+                </div>
+                <div class="camp-raised">$${raised.toLocaleString()} raised</div>
+                <div class="camp-meta">
+                    <span>$${goal.toLocaleString()} goal / ${donors} donors</span>
+                    <span>${days > 0 ? days + ' days left' : 'Ended'}</span>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+  } catch (err) {
+    console.error("Fetch failed:", err);
+    container.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Unable to load campaigns. Is the server running?</p>";
+  }
+
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', loadCampaign);
 </script>
 
 <script>
@@ -619,6 +856,87 @@ const savedCountry = localStorage.getItem('userCountry');
     success.style.display = 'none'; form.style.display = 'block';
   });
 </script>
+
+
+<script>
+// ── AUTH / PROFILE DROPDOWN ──
+let dropdownOpen = false;
+
+function requireLogin(e, destination) {
+  e.preventDefault();
+  if (localStorage.getItem('username')) {
+    // User is logged in — go to destination if provided
+    if (destination) window.location.href = destination;
+  } else {
+    // Not logged in — show prompt
+    document.getElementById('login-modal-bg').classList.add('open');
+  }
+}
+
+function closeLoginPrompt(e) {
+  // Close if clicking the backdrop or cancel button
+  if (!e || e.target === document.getElementById('login-modal-bg')) {
+    document.getElementById('login-modal-bg').classList.remove('open');
+  }
+}
+
+function updateNav() {
+  const username = localStorage.getItem('username');
+  const role     = localStorage.getItem('role');
+  const navAuth    = document.getElementById('nav-auth');
+  const navProfile = document.getElementById('nav-profile');
+
+  if (username) {
+    navAuth.style.display = 'none';
+    navProfile.style.display = 'block';
+    // Build initials from username e.g. "Bobby123" → "BO"
+    const initials = username.slice(0, 2).toUpperCase();
+    document.getElementById('nav-avatar').textContent       = initials;
+    document.getElementById('dropdown-username').textContent = username;
+    document.getElementById('dropdown-role').textContent     = role || 'user';
+  } else {
+    navAuth.style.display    = 'flex';
+    navProfile.style.display = 'none';
+  }
+}
+
+function toggleDropdown() {
+  dropdownOpen = !dropdownOpen;
+  document.getElementById('nav-dropdown').classList.toggle('open', dropdownOpen);
+}
+
+function logout() {
+  localStorage.removeItem('username');
+  localStorage.removeItem('role');
+  localStorage.removeItem('userCountry');
+  window.location.href = 'index.html';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const profile = document.getElementById('nav-profile');
+  if (profile && !profile.contains(e.target)) {
+    dropdownOpen = false;
+    document.getElementById('nav-dropdown').classList.remove('open');
+  }
+});
+
+updateNav();
+</script>
+
+
+<!-- ── LOGIN PROMPT MODAL ── -->
+<div class="login-modal-bg" id="login-modal-bg" onclick="closeLoginPrompt(event)">
+  <div class="login-modal">
+    <div class="login-modal-icon">🔒</div>
+    <div class="login-modal-title">Login required</div>
+    <p class="login-modal-msg">You need to be logged in to do that. Please log in or create an account to continue.</p>
+    <div class="login-modal-btns">
+      <button class="login-modal-btn-primary" onclick="window.location.href='login.html'">Log in</button>
+      <button class="login-modal-btn-secondary" onclick="closeLoginPrompt()">Cancel</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

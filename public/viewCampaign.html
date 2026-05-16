@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Campaign</title>
+
     <style>
         :root {
             --bg-page: #222222;
@@ -15,9 +16,14 @@
             --border-gray: #cccccc;
             --accent: #0056b3;
             --success: #198754;
+            --danger: #dc3545;
+            --overlay: rgba(0, 0, 0, 0.55);
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: sans-serif;
@@ -30,7 +36,7 @@
             margin: 28px auto;
             background: var(--bg-container);
             border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
 
@@ -64,12 +70,13 @@
             width: 100%;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-gray);
             border-radius: 4px;
-            background: #fff;
+            background: #ffffff;
             font: inherit;
         }
 
@@ -89,11 +96,57 @@
             white-space: nowrap;
         }
 
-        .btn:hover { background: #444444; }
-        .btn.secondary { background: #666666; }
-        .btn.secondary:hover { background: #777777; }
-        .btn.success { background: var(--success); }
-        .btn.success:hover { background: #157347; }
+        .btn:hover {
+            background: #444444;
+        }
+
+        .btn.secondary {
+            background: #666666;
+        }
+
+        .btn.secondary:hover {
+            background: #777777;
+        }
+
+        .btn.success {
+            background: var(--success);
+        }
+
+        .btn.success:hover {
+            background: #157347;
+        }
+
+        .btn.facebook {
+            background: #1877f2;
+        }
+
+        .btn.facebook:hover {
+            background: #1464cc;
+        }
+
+        .btn.whatsapp {
+            background: #25d366;
+        }
+
+        .btn.whatsapp:hover {
+            background: #1fae54;
+        }
+
+        .btn.instagram {
+            background: #c13584;
+        }
+
+        .btn.instagram:hover {
+            background: #a82c72;
+        }
+
+        .btn.twitter {
+            background: #111111;
+        }
+
+        .btn.twitter:hover {
+            background: #2a2a2a;
+        }
 
         .content-grid {
             display: grid;
@@ -109,7 +162,8 @@
             overflow: hidden;
         }
 
-        .panel h2, .panel h3 {
+        .panel h2,
+        .panel h3 {
             margin: 0;
             padding: 14px 16px;
             font-size: 1rem;
@@ -117,29 +171,47 @@
             background: var(--bg-muted);
         }
 
-        .campaign-list { padding: 10px; }
+        .campaign-list {
+            padding: 10px;
+        }
+
         .campaign-card {
             width: 100%;
             text-align: left;
             padding: 12px;
             border: 1px solid var(--border-gray);
             border-radius: 6px;
-            background: #fff;
+            background: #ffffff;
             cursor: pointer;
             margin-bottom: 10px;
         }
 
-        .campaign-card:hover, .campaign-card.active {
+        .campaign-card:hover,
+        .campaign-card.active {
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.12);
         }
 
-        .campaign-card strong { display: block; margin-bottom: 4px; }
-        .campaign-card span { display: block; font-size: 0.85rem; color: var(--color-muted); }
+        .campaign-card strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .campaign-card span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--color-muted);
+        }
 
         .banner-placeholder {
             height: 260px;
-            background: repeating-linear-gradient(45deg, #dddddd, #dddddd 12px, #e8e8e8 12px, #e8e8e8 24px);
+            background: repeating-linear-gradient(
+                45deg,
+                #dddddd,
+                #dddddd 12px,
+                #e8e8e8 12px,
+                #e8e8e8 24px
+            );
             display: flex;
             align-items: center;
             justify-content: center;
@@ -156,8 +228,15 @@
             background: #fafafa;
         }
 
-        .detail-body { padding: 18px; }
-        .title-row h1 { margin: 0 0 14px; font-size: 1.6rem; }
+        .detail-body {
+            padding: 18px;
+        }
+
+        .title-row h1 {
+            margin: 0 0 14px;
+            font-size: 1.6rem;
+        }
+
         .meta-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -181,9 +260,22 @@
             margin-bottom: 4px;
         }
 
-        .verified { color: var(--success); font-weight: bold; }
-        .progress-box { margin: 16px 0; }
-        .progress-summary { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; }
+        .verified {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .progress-box {
+            margin: 16px 0;
+        }
+
+        .progress-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
         .progress-bar {
             height: 24px;
             background: var(--bg-muted);
@@ -191,6 +283,7 @@
             border-radius: 999px;
             overflow: hidden;
         }
+
         .progress-fill {
             height: 100%;
             background: var(--accent);
@@ -209,9 +302,19 @@
             overflow: hidden;
         }
 
-        .section-box h3 { background: var(--bg-muted); }
-        .section-content { padding: 14px 16px; line-height: 1.5; }
-        .section-content ul { margin: 0; padding-left: 20px; }
+        .section-box h3 {
+            background: var(--bg-muted);
+        }
+
+        .section-content {
+            padding: 14px 16px;
+            line-height: 1.5;
+        }
+
+        .section-content ul {
+            margin: 0;
+            padding-left: 20px;
+        }
 
         .media-grid {
             display: grid;
@@ -247,19 +350,182 @@
             color: var(--color-muted);
         }
 
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .share-modal {
+            width: min(620px, 100%);
+            max-height: calc(100vh - 32px);
+            overflow-y: auto;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border: 1px solid var(--border-gray);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+        }
+
+        .share-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: var(--bg-muted);
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .share-modal-header h2 {
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+        }
+
+        .close-modal-button {
+            border: none;
+            background: transparent;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--color-primary);
+        }
+
+        .share-modal-body {
+            padding: 18px;
+        }
+
+        .share-campaign-summary {
+            border: 1px solid var(--border-gray);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .share-campaign-summary h3 {
+            margin: 0;
+            padding: 12px 14px;
+            background: var(--bg-muted);
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .share-campaign-summary-content {
+            padding: 14px;
+        }
+
+        .share-platform-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .share-preview {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .share-thumbnail-placeholder {
+            min-height: 100px;
+            background: var(--bg-muted);
+            border: 2px dashed var(--border-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-muted);
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .share-preview-text p {
+            margin: 0 0 8px;
+        }
+
+        .share-link {
+            word-break: break-all;
+            color: var(--accent);
+        }
+
+        .share-status {
+            margin-top: 18px;
+            padding: 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            background: #f8f9fa;
+        }
+
+        .share-status.success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .share-status.error {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .share-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px;
+            border-top: 1px solid var(--border-gray);
+            background: #fafafa;
+        }
+
         @media (max-width: 820px) {
-            header, .search-area, .detail-actions, .donation-panel { flex-direction: column; align-items: stretch; }
-            .content-grid { grid-template-columns: 1fr; }
-            .meta-grid, .media-grid { grid-template-columns: 1fr; }
+            header,
+            .search-area,
+            .detail-actions,
+            .donation-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid,
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .share-preview {
+                grid-template-columns: 1fr;
+            }
+
+            .share-platform-grid {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
+
 <body>
     <main class="app-container">
         <header>
             <div class="logo-placeholder">LOGO</div>
+
             <form class="search-area" id="campaign-search-form">
-                <input id="campaign-search" type="search" placeholder="Search Campaigns..." aria-label="Search campaigns">
+                <input
+                    id="campaign-search"
+                    type="search"
+                    placeholder="Search Campaigns..."
+                    aria-label="Search campaigns"
+                >
+
                 <select id="category-filter" aria-label="Filter campaign category">
                     <option value="">All Categories</option>
                     <option value="Community">Community</option>
@@ -267,8 +533,10 @@
                     <option value="Education">Education</option>
                     <option value="Emergency">Emergency</option>
                 </select>
+
                 <button class="btn" type="submit">Search</button>
             </form>
+
             <a class="btn secondary" href="#">Login</a>
             <button class="btn success" id="header-donate-button" type="button">Donate</button>
         </header>
@@ -280,7 +548,10 @@
             </aside>
 
             <article class="panel" aria-label="Selected campaign details">
-                <div class="banner-placeholder">Campaign Banner Image Placeholder</div>
+                <div class="banner-placeholder">
+                    Campaign Banner Image Placeholder
+                </div>
+
                 <div class="detail-actions">
                     <button class="btn secondary" id="save-button" type="button">Save ♥</button>
                     <button class="btn secondary" id="share-button" type="button">Share ↗</button>
@@ -289,243 +560,1016 @@
                 <div id="campaign-details" class="detail-body"></div>
 
                 <div class="donation-panel">
-                    <input id="donation-amount" type="number" min="1" step="0.01" value="25.00" aria-label="Donation amount">
-                    <button class="btn success" id="donate-now-button" type="button">Donate Now</button>
-                    <button class="btn secondary" id="favourite-button" type="button">Add to Favourites</button>
+                    <input
+                        id="donation-amount"
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        value="25.00"
+                        aria-label="Donation amount"
+                    >
+
+                    <button class="btn success" id="donate-now-button" type="button">
+                        Donate Now
+                    </button>
+
+                    <button class="btn secondary" id="favourite-button" type="button">
+                        Add to Favourites
+                    </button>
                 </div>
             </article>
         </section>
     </main>
 
+    <section
+        class="modal-overlay"
+        id="share-modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="share-modal-title"
+    >
+        <div class="share-modal">
+            <div class="share-modal-header">
+                <h2 id="share-modal-title">Share This Campaign</h2>
+                <button
+                    class="close-modal-button"
+                    id="share-modal-close-icon"
+                    type="button"
+                    aria-label="Close share window"
+                >
+                    ×
+                </button>
+            </div>
+
+            <div class="share-modal-body">
+                <section class="share-campaign-summary">
+                    <h3>Campaign Page</h3>
+
+                    <div class="share-campaign-summary-content">
+                        <p>
+                            <strong>Campaign Title:</strong>
+                            <span id="share-campaign-title"></span>
+                        </p>
+
+                        <p>
+                            <strong>Progress:</strong>
+                            <span id="share-campaign-progress"></span>
+                        </p>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="share-progress-fill"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="share-campaign-summary">
+                    <h3>Choose Platform</h3>
+
+                    <div class="share-campaign-summary-content">
+                        <div class="share-platform-grid">
+                            <button class="btn facebook" id="facebook-share-button" type="button">
+                                Facebook
+                            </button>
+
+                            <button class="btn whatsapp" id="whatsapp-share-button" type="button">
+                                WhatsApp
+                            </button>
+
+                            <button class="btn instagram" id="instagram-share-button" type="button">
+                                Instagram
+                            </button>
+
+                            <button class="btn twitter" id="twitter-share-button" type="button">
+                                Twitter/X
+                            </button>
+                        </div>
+
+                        <button class="btn secondary" id="copy-link-button" type="button">
+                            Copy Campaign Link
+                        </button>
+                    </div>
+                </section>
+
+                <section class="share-campaign-summary">
+                    <h3>Share Preview</h3>
+
+                    <div class="share-campaign-summary-content share-preview">
+                        <div class="share-thumbnail-placeholder">
+                            Thumbnail Image Placeholder
+                        </div>
+
+                        <div class="share-preview-text">
+                            <p id="share-preview-description"></p>
+                            <p class="share-link" id="share-preview-link"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="share-campaign-summary">
+                    <h3>Share Status</h3>
+
+                    <div class="share-campaign-summary-content">
+                        <div class="share-status" id="share-status-message">
+                            Select a sharing option.
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="share-modal-footer">
+                <button class="btn secondary" id="share-modal-close-button" type="button">
+                    Close
+                </button>
+            </div>
+        </div>
+    </section>
+
     <script>
         class Fundraiser {
+            #name;
+            #verified;
+
             constructor({ name, verified }) {
-                this.name = name;
-                this.verified = Boolean(verified);
+                this.#name = name;
+                this.#verified = Boolean(verified);
+            }
+
+            get name() {
+                return this.#name;
+            }
+
+            get verified() {
+                return this.#verified;
             }
         }
 
         class CampaignMedia {
+            #label;
+            #type;
+
             constructor({ label, type }) {
-                this.label = label;
-                this.type = type;
+                this.#label = label;
+                this.#type = type;
+            }
+
+            get label() {
+                return this.#label;
+            }
+
+            get type() {
+                return this.#type;
             }
         }
 
         class CampaignUpdate {
+            #title;
+            #description;
+
             constructor({ title, description }) {
-                this.title = title;
-                this.description = description;
+                this.#title = title;
+                this.#description = description;
+            }
+
+            get title() {
+                return this.#title;
+            }
+
+            get description() {
+                return this.#description;
+            }
+        }
+
+        class ShareRecord {
+            #campaignId;
+            #platform;
+            #sharedAt;
+            #shareUrl;
+
+            constructor({ campaignId, platform, sharedAt, shareUrl }) {
+                this.#campaignId = campaignId;
+                this.#platform = platform;
+                this.#sharedAt = sharedAt;
+                this.#shareUrl = shareUrl;
+            }
+
+            get campaignId() {
+                return this.#campaignId;
+            }
+
+            get platform() {
+                return this.#platform;
+            }
+
+            get sharedAt() {
+                return this.#sharedAt;
+            }
+
+            get shareUrl() {
+                return this.#shareUrl;
             }
         }
 
         class FundraisingActivity {
+            #campaignId;
+            #title;
+            #description;
+            #category;
+            #deadline;
+            #targetAmount;
+            #currentAmount;
+            #status;
+            #visibility;
+            #fundraiser;
+            #updates;
+            #media;
+
             constructor(data) {
-                this.campaignId = data.campaignId;
-                this.title = data.title;
-                this.description = data.description;
-                this.category = data.category;
-                this.deadline = data.deadline;
-                this.targetAmount = Number(data.targetAmount);
-                this.currentAmount = Number(data.currentAmount);
-                this.status = data.status || "Active";
-                this.fundraiser = new Fundraiser(data.fundraiser);
-                this.updates = (data.updates || []).map(update => new CampaignUpdate(update));
-                this.media = (data.media || []).map(media => new CampaignMedia(media));
+                this.#campaignId = data.campaignId;
+                this.#title = data.title;
+                this.#description = data.description;
+                this.#category = data.category;
+                this.#deadline = data.deadline;
+                this.#targetAmount = Number(data.targetAmount);
+                this.#currentAmount = Number(data.currentAmount);
+                this.#status = data.status || "Active";
+                this.#visibility = data.visibility || "Public";
+                this.#fundraiser = new Fundraiser(data.fundraiser);
+                this.#updates = (data.updates || []).map(
+                    update => new CampaignUpdate(update)
+                );
+                this.#media = (data.media || []).map(
+                    media => new CampaignMedia(media)
+                );
+            }
+
+            get campaignId() {
+                return this.#campaignId;
+            }
+
+            get title() {
+                return this.#title;
+            }
+
+            get description() {
+                return this.#description;
+            }
+
+            get category() {
+                return this.#category;
+            }
+
+            get deadline() {
+                return this.#deadline;
+            }
+
+            get targetAmount() {
+                return this.#targetAmount;
+            }
+
+            get currentAmount() {
+                return this.#currentAmount;
+            }
+
+            get status() {
+                return this.#status;
+            }
+
+            get visibility() {
+                return this.#visibility;
+            }
+
+            get fundraiser() {
+                return this.#fundraiser;
+            }
+
+            get updates() {
+                return [...this.#updates];
+            }
+
+            get media() {
+                return [...this.#media];
             }
 
             getProgressPercentage() {
-                if (this.targetAmount <= 0) return 0;
-                return Math.min(100, Math.round((this.currentAmount / this.targetAmount) * 100));
+                if (this.#targetAmount <= 0) {
+                    return 0;
+                }
+
+                return Math.min(
+                    100,
+                    Math.round((this.#currentAmount / this.#targetAmount) * 100)
+                );
             }
 
             isActive() {
-                return this.status.toLowerCase() === "active";
+                return this.#status.toLowerCase() === "active";
+            }
+
+            isPublic() {
+                return this.#visibility.toLowerCase() === "public";
+            }
+
+            isShareable() {
+                return this.isActive() && this.isPublic();
             }
         }
 
         class CampaignRepository {
+            #endpoint;
+            #fallbackCampaigns;
+
             constructor(endpoint = "/campaigns") {
-                this.endpoint = endpoint;
-                this.fallbackCampaigns = [
+                this.#endpoint = endpoint;
+
+                this.#fallbackCampaigns = [
                     {
                         campaignId: 1,
                         title: "Help Build a Community Shelter",
-                        fundraiser: { name: "John Tan", verified: true },
+                        fundraiser: {
+                            name: "John Tan",
+                            verified: true
+                        },
                         category: "Community",
                         deadline: "20 Dec 2026",
                         targetAmount: 10000,
                         currentAmount: 8500,
                         status: "Active",
-                        description: "This fundraising campaign aims to build a temporary shelter for displaced families and provide food and medical supplies. Campaign updates and media are displayed below.",
+                        visibility: "Public",
+                        description:
+                            "This fundraising campaign aims to build a temporary shelter for displaced families and provide food and medical supplies. Campaign updates and media are displayed below.",
                         updates: [
-                            { title: "Update 1", description: "Construction started" },
-                            { title: "Update 2", description: "Medical supplies delivered" }
+                            {
+                                title: "Update 1",
+                                description: "Construction started"
+                            },
+                            {
+                                title: "Update 2",
+                                description: "Medical supplies delivered"
+                            }
                         ],
                         media: [
-                            { label: "Image", type: "image" },
-                            { label: "Image", type: "image" },
-                            { label: "Video Thumbnail", type: "video" }
+                            {
+                                label: "Image",
+                                type: "image"
+                            },
+                            {
+                                label: "Image",
+                                type: "image"
+                            },
+                            {
+                                label: "Video Thumbnail",
+                                type: "video"
+                            }
                         ]
                     },
                     {
                         campaignId: 2,
-                        title: "Emergency Medical Support Fund",
-                        fundraiser: { name: "Aisha Lim", verified: true },
-                        category: "Medical",
+                        title: "Support Flood Victims",
+                        fundraiser: {
+                            name: "Aisha Lim",
+                            verified: true
+                        },
+                        category: "Emergency",
                         deadline: "15 Nov 2026",
-                        targetAmount: 15000,
-                        currentAmount: 4200,
+                        targetAmount: 10000,
+                        currentAmount: 6500,
                         status: "Active",
-                        description: "Raising funds to support urgent medical treatment, medication, and follow-up care for patients who need financial assistance.",
+                        visibility: "Public",
+                        description:
+                            "Help families affected by floods rebuild their homes.",
                         updates: [
-                            { title: "Update 1", description: "Initial hospital consultation completed" }
+                            {
+                                title: "Update 1",
+                                description: "Emergency supplies delivered"
+                            }
                         ],
                         media: [
-                            { label: "Image", type: "image" },
-                            { label: "Image", type: "image" },
-                            { label: "Video Thumbnail", type: "video" }
+                            {
+                                label: "Image",
+                                type: "image"
+                            },
+                            {
+                                label: "Image",
+                                type: "image"
+                            },
+                            {
+                                label: "Video Thumbnail",
+                                type: "video"
+                            }
                         ]
                     },
                     {
                         campaignId: 3,
                         title: "School Supplies for Low-Income Students",
-                        fundraiser: { name: "Marcus Lee", verified: false },
+                        fundraiser: {
+                            name: "Marcus Lee",
+                            verified: false
+                        },
                         category: "Education",
                         deadline: "05 Jan 2027",
                         targetAmount: 5000,
                         currentAmount: 1250,
                         status: "Active",
-                        description: "Providing school bags, stationery, textbooks, and learning materials for students from low-income households.",
+                        visibility: "Public",
+                        description:
+                            "Providing school bags, stationery, textbooks, and learning materials for students from low-income households.",
                         updates: [
-                            { title: "Update 1", description: "First batch of stationery purchased" }
+                            {
+                                title: "Update 1",
+                                description: "First batch of stationery purchased"
+                            }
                         ],
                         media: [
-                            { label: "Image", type: "image" },
-                            { label: "Image", type: "image" },
-                            { label: "Video Thumbnail", type: "video" }
+                            {
+                                label: "Image",
+                                type: "image"
+                            },
+                            {
+                                label: "Image",
+                                type: "image"
+                            },
+                            {
+                                label: "Video Thumbnail",
+                                type: "video"
+                            }
                         ]
                     }
                 ];
             }
 
+            get endpoint() {
+                return this.#endpoint;
+            }
+
             async getCampaigns() {
                 try {
-                    const response = await fetch(this.endpoint);
-                    if (!response.ok) throw new Error("Campaign endpoint unavailable");
+                    const response = await fetch(this.#endpoint);
+
+                    if (!response.ok) {
+                        throw new Error("Campaign endpoint unavailable");
+                    }
+
                     const campaigns = await response.json();
-                    return campaigns.map(campaign => new FundraisingActivity(campaign));
+
+                    return campaigns.map(
+                        campaign => new FundraisingActivity(campaign)
+                    );
                 } catch (error) {
-                    return this.fallbackCampaigns.map(campaign => new FundraisingActivity(campaign));
+                    return this.#fallbackCampaigns.map(
+                        campaign => new FundraisingActivity(campaign)
+                    );
                 }
             }
 
             async searchCampaigns(keyword = "", category = "") {
                 const campaigns = await this.getCampaigns();
                 const loweredKeyword = keyword.trim().toLowerCase();
+
                 return campaigns.filter(campaign => {
-                    const matchesKeyword = !loweredKeyword ||
+                    const matchesKeyword =
+                        !loweredKeyword ||
                         campaign.title.toLowerCase().includes(loweredKeyword) ||
                         campaign.description.toLowerCase().includes(loweredKeyword) ||
                         campaign.fundraiser.name.toLowerCase().includes(loweredKeyword);
-                    const matchesCategory = !category || campaign.category === category;
+
+                    const matchesCategory =
+                        !category || campaign.category === category;
+
                     return matchesKeyword && matchesCategory;
                 });
             }
         }
 
         class CampaignDetailsView {
+            #listElement;
+            #detailsElement;
+
             constructor() {
-                this.listElement = document.getElementById("campaign-list");
-                this.detailsElement = document.getElementById("campaign-details");
+                this.#listElement = document.getElementById("campaign-list");
+                this.#detailsElement = document.getElementById("campaign-details");
+            }
+
+            get detailsElement() {
+                return this.#detailsElement;
             }
 
             renderCampaignList(campaigns, selectedCampaignId, onSelectCampaign) {
-                this.listElement.innerHTML = "";
+                this.#listElement.innerHTML = "";
 
                 if (campaigns.length === 0) {
-                    this.listElement.innerHTML = '<p class="message">No campaigns found.</p>';
+                    this.#listElement.innerHTML =
+                        '<p class="message">No campaigns found.</p>';
                     return;
                 }
 
                 campaigns.forEach(campaign => {
                     const button = document.createElement("button");
-                    button.className = `campaign-card ${campaign.campaignId === selectedCampaignId ? "active" : ""}`;
+
+                    button.className =
+                        `campaign-card ${
+                            campaign.campaignId === selectedCampaignId
+                                ? "active"
+                                : ""
+                        }`;
+
                     button.type = "button";
+
                     button.innerHTML = `
                         <strong>${this.escapeHtml(campaign.title)}</strong>
-                        <span>${this.escapeHtml(campaign.category)} • ${campaign.getProgressPercentage()}% funded</span>
-                        <span>Deadline: ${this.escapeHtml(campaign.deadline)}</span>
+                        <span>
+                            ${this.escapeHtml(campaign.category)}
+                            • ${campaign.getProgressPercentage()}% funded
+                        </span>
+                        <span>
+                            Deadline: ${this.escapeHtml(campaign.deadline)}
+                        </span>
                     `;
-                    button.addEventListener("click", () => onSelectCampaign(campaign));
-                    this.listElement.appendChild(button);
+
+                    button.addEventListener(
+                        "click",
+                        () => onSelectCampaign(campaign)
+                    );
+
+                    this.#listElement.appendChild(button);
                 });
             }
 
             renderCampaignDetails(campaign) {
                 const progress = campaign.getProgressPercentage();
-                const verifiedText = campaign.fundraiser.verified ? '<span class="verified">Verified ✔</span>' : '<span>Not Verified</span>';
+
+                const verifiedText = campaign.fundraiser.verified
+                    ? '<span class="verified">Verified ✔</span>'
+                    : '<span>Not Verified</span>';
+
                 const updatesHtml = campaign.updates.length
-                    ? `<ul>${campaign.updates.map(update => `<li><strong>${this.escapeHtml(update.title)}:</strong> ${this.escapeHtml(update.description)}</li>`).join("")}</ul>`
-                    : '<p>No recent updates yet.</p>';
+                    ? `
+                        <ul>
+                            ${campaign.updates
+                                .map(
+                                    update => `
+                                        <li>
+                                            <strong>${this.escapeHtml(update.title)}:</strong>
+                                            ${this.escapeHtml(update.description)}
+                                        </li>
+                                    `
+                                )
+                                .join("")}
+                        </ul>
+                    `
+                    : "<p>No recent updates yet.</p>";
+
                 const mediaHtml = campaign.media.length
-                    ? campaign.media.map(media => `<div class="media-placeholder">${this.escapeHtml(media.label)}</div>`).join("")
+                    ? campaign.media
+                        .map(
+                            media => `
+                                <div class="media-placeholder">
+                                    ${this.escapeHtml(media.label)}
+                                </div>
+                            `
+                        )
+                        .join("")
                     : '<div class="media-placeholder">Media Placeholder</div>';
 
-                this.detailsElement.innerHTML = `
+                this.#detailsElement.innerHTML = `
                     <div class="title-row">
-                        <h1>Campaign Title: ${this.escapeHtml(campaign.title)}</h1>
+                        <h1>
+                            Campaign Title:
+                            ${this.escapeHtml(campaign.title)}
+                        </h1>
                     </div>
 
                     <div class="meta-grid">
-                        <div class="meta-item"><span class="meta-label">Fundraiser</span>${this.escapeHtml(campaign.fundraiser.name)} ${verifiedText}</div>
-                        <div class="meta-item"><span class="meta-label">Category</span>${this.escapeHtml(campaign.category)}</div>
-                        <div class="meta-item"><span class="meta-label">Deadline</span>${this.escapeHtml(campaign.deadline)}</div>
-                        <div class="meta-item"><span class="meta-label">Status</span>${this.escapeHtml(campaign.status)}</div>
+                        <div class="meta-item">
+                            <span class="meta-label">Fundraiser</span>
+                            ${this.escapeHtml(campaign.fundraiser.name)}
+                            ${verifiedText}
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Category</span>
+                            ${this.escapeHtml(campaign.category)}
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Deadline</span>
+                            ${this.escapeHtml(campaign.deadline)}
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Status</span>
+                            ${this.escapeHtml(campaign.status)}
+                        </div>
                     </div>
 
                     <div class="progress-box">
                         <div class="progress-summary">
-                            <span>Progress: $${campaign.currentAmount.toLocaleString()} raised of $${campaign.targetAmount.toLocaleString()}</span>
+                            <span>
+                                Progress:
+                                $${campaign.currentAmount.toLocaleString()}
+                                raised of
+                                $${campaign.targetAmount.toLocaleString()}
+                            </span>
                             <span>${progress}%</span>
                         </div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%">${progress}%</div></div>
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-fill"
+                                style="width: ${progress}%"
+                            >
+                                ${progress}%
+                            </div>
+                        </div>
                     </div>
 
                     <section class="section-box">
                         <h3>Description</h3>
-                        <div class="section-content">${this.escapeHtml(campaign.description)}</div>
+                        <div class="section-content">
+                            ${this.escapeHtml(campaign.description)}
+                        </div>
                     </section>
 
                     <section class="section-box">
                         <h3>Recent Updates</h3>
-                        <div class="section-content">${updatesHtml}</div>
+                        <div class="section-content">
+                            ${updatesHtml}
+                        </div>
                     </section>
 
                     <section class="section-box">
                         <h3>Campaign Media</h3>
-                        <div class="section-content media-grid">${mediaHtml}</div>
+                        <div class="section-content media-grid">
+                            ${mediaHtml}
+                        </div>
                     </section>
                 `;
             }
 
+            renderEmptyCampaignMessage() {
+                this.#detailsElement.innerHTML =
+                    '<p class="message">Select a campaign to view its details.</p>';
+            }
+
             escapeHtml(value) {
-                return String(value).replace(/[&<>'"]/g, character => ({
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    "'": "&#39;",
-                    '"': "&quot;"
-                }[character]));
+                return String(value).replace(
+                    /[&<>'"]/g,
+                    character =>
+                        ({
+                            "&": "&amp;",
+                            "<": "&lt;",
+                            ">": "&gt;",
+                            "'": "&#39;",
+                            '"': "&quot;"
+                        }[character])
+                );
+            }
+        }
+
+        class ShareCampaignService {
+            createCampaignUrl(campaign) {
+                const baseUrl =
+                    window.location.origin === "null"
+                        ? "https://fundraisingplatform.com"
+                        : window.location.origin;
+
+                return `${baseUrl}${window.location.pathname}?campaignId=${campaign.campaignId}`;
+            }
+
+            createShareText(campaign) {
+                return `${campaign.title} - ${campaign.description}`;
+            }
+
+            createFacebookShareUrl(campaignUrl) {
+                return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(campaignUrl)}`;
+            }
+
+            createWhatsAppShareUrl(campaign, campaignUrl) {
+                const message = `${this.createShareText(campaign)} ${campaignUrl}`;
+
+                return `https://wa.me/?text=${encodeURIComponent(message)}`;
+            }
+
+            createTwitterShareUrl(campaign, campaignUrl) {
+                const message = this.createShareText(campaign);
+
+                return `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(campaignUrl)}`;
+            }
+
+            createShareRecord(campaign, platform, campaignUrl) {
+                return new ShareRecord({
+                    campaignId: campaign.campaignId,
+                    platform: platform,
+                    sharedAt: new Date().toISOString(),
+                    shareUrl: campaignUrl
+                });
+            }
+        }
+
+        class ShareCampaignView {
+            #modalOverlay;
+            #titleElement;
+            #progressTextElement;
+            #progressFillElement;
+            #previewDescriptionElement;
+            #previewLinkElement;
+            #statusElement;
+
+            constructor() {
+                this.#modalOverlay = document.getElementById("share-modal-overlay");
+                this.#titleElement = document.getElementById("share-campaign-title");
+                this.#progressTextElement = document.getElementById("share-campaign-progress");
+                this.#progressFillElement = document.getElementById("share-progress-fill");
+                this.#previewDescriptionElement = document.getElementById("share-preview-description");
+                this.#previewLinkElement = document.getElementById("share-preview-link");
+                this.#statusElement = document.getElementById("share-status-message");
+            }
+
+            open() {
+                this.#modalOverlay.classList.add("open");
+            }
+
+            close() {
+                this.#modalOverlay.classList.remove("open");
+            }
+
+            renderCampaign(campaign, campaignUrl) {
+                const progress = campaign.getProgressPercentage();
+
+                this.#titleElement.textContent = campaign.title;
+                this.#progressTextElement.textContent = `${progress}% Raised`;
+                this.#progressFillElement.style.width = `${progress}%`;
+                this.#progressFillElement.textContent = `${progress}%`;
+                this.#previewDescriptionElement.textContent = `"${campaign.description}"`;
+                this.#previewLinkElement.textContent = campaignUrl;
+
+                this.showNeutralStatus("Select a sharing option.");
+            }
+
+            showSuccessStatus(message) {
+                this.#statusElement.className = "share-status success";
+                this.#statusElement.textContent = `✔ ${message}`;
+            }
+
+            showErrorStatus(message) {
+                this.#statusElement.className = "share-status error";
+                this.#statusElement.textContent = `✘ ${message}`;
+            }
+
+            showNeutralStatus(message) {
+                this.#statusElement.className = "share-status";
+                this.#statusElement.textContent = message;
+            }
+
+            bindFacebookShare(handler) {
+                document
+                    .getElementById("facebook-share-button")
+                    .addEventListener("click", handler);
+            }
+
+            bindWhatsAppShare(handler) {
+                document
+                    .getElementById("whatsapp-share-button")
+                    .addEventListener("click", handler);
+            }
+
+            bindInstagramShare(handler) {
+                document
+                    .getElementById("instagram-share-button")
+                    .addEventListener("click", handler);
+            }
+
+            bindTwitterShare(handler) {
+                document
+                    .getElementById("twitter-share-button")
+                    .addEventListener("click", handler);
+            }
+
+            bindCopyLink(handler) {
+                document
+                    .getElementById("copy-link-button")
+                    .addEventListener("click", handler);
+            }
+
+            bindCloseButtons(handler) {
+                document
+                    .getElementById("share-modal-close-button")
+                    .addEventListener("click", handler);
+
+                document
+                    .getElementById("share-modal-close-icon")
+                    .addEventListener("click", handler);
+            }
+
+            bindOverlayClose(handler) {
+                document
+                    .getElementById("share-modal-overlay")
+                    .addEventListener("click", event => {
+                        if (event.target.id === "share-modal-overlay") {
+                            handler();
+                        }
+                    });
+            }
+        }
+
+        class ShareCampaignController {
+            #shareService;
+            #shareView;
+            #selectedCampaign;
+            #currentCampaignUrl;
+            #shareRecords;
+
+            constructor(shareService, shareView) {
+                this.#shareService = shareService;
+                this.#shareView = shareView;
+                this.#selectedCampaign = null;
+                this.#currentCampaignUrl = "";
+                this.#shareRecords = [];
+            }
+
+            get selectedCampaign() {
+                return this.#selectedCampaign;
+            }
+
+            get currentCampaignUrl() {
+                return this.#currentCampaignUrl;
+            }
+
+            get shareRecords() {
+                return [...this.#shareRecords];
+            }
+
+            initialise() {
+                this.#shareView.bindFacebookShare(() => this.shareToFacebook());
+                this.#shareView.bindWhatsAppShare(() => this.shareToWhatsApp());
+                this.#shareView.bindInstagramShare(() => this.shareToInstagram());
+                this.#shareView.bindTwitterShare(() => this.shareToTwitter());
+                this.#shareView.bindCopyLink(() => this.copyCampaignLink());
+                this.#shareView.bindCloseButtons(() => this.#shareView.close());
+                this.#shareView.bindOverlayClose(() => this.#shareView.close());
+            }
+
+            openShareWindow(campaign) {
+                if (!campaign) {
+                    return;
+                }
+
+                if (!campaign.isShareable()) {
+                    alert(
+                        "Sharing is disabled because this campaign is private, closed, or unavailable."
+                    );
+                    return;
+                }
+
+                this.#selectedCampaign = campaign;
+                this.#currentCampaignUrl =
+                    this.#shareService.createCampaignUrl(campaign);
+
+                this.#shareView.renderCampaign(
+                    campaign,
+                    this.#currentCampaignUrl
+                );
+
+                this.#shareView.open();
+            }
+
+            openSmallPopup(url, windowName) {
+                window.open(
+                    url,
+                    windowName,
+                    "width=600,height=600,left=300,top=100,resizable=yes,scrollbars=yes"
+                );
+            }
+
+            recordShare(platform) {
+                if (!this.#selectedCampaign || !this.#currentCampaignUrl) {
+                    return;
+                }
+
+                const shareRecord =
+                    this.#shareService.createShareRecord(
+                        this.#selectedCampaign,
+                        platform,
+                        this.#currentCampaignUrl
+                    );
+
+                this.#shareRecords.push(shareRecord);
+            }
+
+            shareToFacebook() {
+                if (!this.#currentCampaignUrl) {
+                    this.#shareView.showErrorStatus("No campaign selected for sharing.");
+                    return;
+                }
+
+                const shareUrl =
+                    this.#shareService.createFacebookShareUrl(
+                        this.#currentCampaignUrl
+                    );
+
+                this.openSmallPopup(shareUrl, "facebookShareWindow");
+                this.recordShare("Facebook");
+                this.#shareView.showSuccessStatus(
+                    "Facebook share window opened."
+                );
+            }
+
+            shareToWhatsApp() {
+                if (!this.#selectedCampaign || !this.#currentCampaignUrl) {
+                    this.#shareView.showErrorStatus("No campaign selected for sharing.");
+                    return;
+                }
+
+                const shareUrl =
+                    this.#shareService.createWhatsAppShareUrl(
+                        this.#selectedCampaign,
+                        this.#currentCampaignUrl
+                    );
+
+                this.openSmallPopup(shareUrl, "whatsappShareWindow");
+                this.recordShare("WhatsApp");
+                this.#shareView.showSuccessStatus(
+                    "WhatsApp share window opened."
+                );
+            }
+
+            shareToTwitter() {
+                if (!this.#selectedCampaign || !this.#currentCampaignUrl) {
+                    this.#shareView.showErrorStatus("No campaign selected for sharing.");
+                    return;
+                }
+
+                const shareUrl =
+                    this.#shareService.createTwitterShareUrl(
+                        this.#selectedCampaign,
+                        this.#currentCampaignUrl
+                    );
+
+                this.openSmallPopup(shareUrl, "twitterShareWindow");
+                this.recordShare("Twitter/X");
+                this.#shareView.showSuccessStatus(
+                    "Twitter/X share window opened."
+                );
+            }
+
+            async shareToInstagram() {
+                if (!this.#currentCampaignUrl) {
+                    this.#shareView.showErrorStatus("No campaign selected for sharing.");
+                    return;
+                }
+
+                await this.copyCampaignLink();
+
+                this.recordShare("Instagram");
+                this.#shareView.showSuccessStatus(
+                    "Instagram does not support direct browser link sharing. Link copied; paste it into Instagram manually."
+                );
+            }
+
+            async copyCampaignLink() {
+                if (!this.#currentCampaignUrl) {
+                    this.#shareView.showErrorStatus("No campaign link available.");
+                    return;
+                }
+
+                try {
+                    await navigator.clipboard.writeText(
+                        this.#currentCampaignUrl
+                    );
+
+                    this.recordShare("Copy Link");
+
+                    this.#shareView.showSuccessStatus(
+                        "Link copied successfully!"
+                    );
+                } catch (error) {
+                    this.#shareView.showErrorStatus(
+                        "Unable to copy automatically. Please copy the link manually from the preview."
+                    );
+                }
             }
         }
 
         class CampaignDetailsController {
-            constructor(repository, view) {
-                this.repository = repository;
-                this.view = view;
-                this.campaigns = [];
-                this.selectedCampaign = null;
+            #repository;
+            #view;
+            #shareController;
+            #campaigns;
+            #selectedCampaign;
+
+            constructor(repository, view, shareController) {
+                this.#repository = repository;
+                this.#view = view;
+                this.#shareController = shareController;
+                this.#campaigns = [];
+                this.#selectedCampaign = null;
+            }
+
+            get campaigns() {
+                return [...this.#campaigns];
+            }
+
+            get selectedCampaign() {
+                return this.#selectedCampaign;
             }
 
             async initialise() {
@@ -534,88 +1578,160 @@
             }
 
             bindEvents() {
-                document.getElementById("campaign-search-form").addEventListener("submit", async event => {
-                    event.preventDefault();
-                    await this.searchAndRender();
-                });
+                document
+                    .getElementById("campaign-search-form")
+                    .addEventListener("submit", async event => {
+                        event.preventDefault();
+                        await this.searchAndRender();
+                    });
 
-                document.getElementById("donate-now-button").addEventListener("click", () => this.redirectToPayment());
-                document.getElementById("header-donate-button").addEventListener("click", () => this.redirectToPayment());
-                document.getElementById("favourite-button").addEventListener("click", () => this.addToFavourites());
-                document.getElementById("save-button").addEventListener("click", () => this.addToFavourites());
-                document.getElementById("share-button").addEventListener("click", () => this.shareCampaign());
+                document
+                    .getElementById("donate-now-button")
+                    .addEventListener("click", () => this.redirectToPayment());
+
+                document
+                    .getElementById("header-donate-button")
+                    .addEventListener("click", () => this.redirectToPayment());
+
+                document
+                    .getElementById("favourite-button")
+                    .addEventListener("click", () => this.addToFavourites());
+
+                document
+                    .getElementById("save-button")
+                    .addEventListener("click", () => this.addToFavourites());
+
+                document
+                    .getElementById("share-button")
+                    .addEventListener("click", () => {
+                        this.#shareController.openShareWindow(
+                            this.#selectedCampaign
+                        );
+                    });
             }
 
             async searchAndRender() {
-                const keyword = document.getElementById("campaign-search").value;
-                const category = document.getElementById("category-filter").value;
-                this.campaigns = await this.repository.searchCampaigns(keyword, category);
-                this.selectedCampaign = this.campaigns[0] || null;
+                const keyword =
+                    document.getElementById("campaign-search").value;
+
+                const category =
+                    document.getElementById("category-filter").value;
+
+                this.#campaigns =
+                    await this.#repository.searchCampaigns(
+                        keyword,
+                        category
+                    );
+
+                this.#selectedCampaign = this.#campaigns[0] || null;
+
                 this.render();
             }
 
             selectCampaign(campaign) {
-                this.selectedCampaign = campaign;
+                this.#selectedCampaign = campaign;
                 this.render();
             }
 
             render() {
-                this.view.renderCampaignList(this.campaigns, this.selectedCampaign?.campaignId, campaign => this.selectCampaign(campaign));
-                if (this.selectedCampaign) {
-                    this.view.renderCampaignDetails(this.selectedCampaign);
+                this.#view.renderCampaignList(
+                    this.#campaigns,
+                    this.#selectedCampaign?.campaignId,
+                    campaign => this.selectCampaign(campaign)
+                );
+
+                if (this.#selectedCampaign) {
+                    this.#view.renderCampaignDetails(
+                        this.#selectedCampaign
+                    );
                 } else {
-                    this.view.detailsElement.innerHTML = '<p class="message">Select a campaign to view its details.</p>';
+                    this.#view.renderEmptyCampaignMessage();
                 }
             }
 
             redirectToPayment() {
-                if (!this.selectedCampaign) {
+                if (!this.#selectedCampaign) {
                     alert("Please select a campaign first.");
                     return;
                 }
 
-                if (!this.selectedCampaign.isActive()) {
+                if (!this.#selectedCampaign.isActive()) {
                     alert("This campaign is closed. Donations are disabled.");
                     return;
                 }
 
-                const amount = Number(document.getElementById("donation-amount").value);
+                const amount =
+                    Number(
+                        document.getElementById("donation-amount").value
+                    );
+
                 if (!amount || amount <= 0) {
                     alert("Please enter a valid donation amount.");
                     return;
                 }
 
-                sessionStorage.setItem("selectedCampaign", this.selectedCampaign.title);
-                sessionStorage.setItem("selectedAmount", amount.toFixed(2));
+                sessionStorage.setItem(
+                    "selectedCampaign",
+                    this.#selectedCampaign.title
+                );
+
+                sessionStorage.setItem(
+                    "selectedAmount",
+                    amount.toFixed(2)
+                );
+
                 window.location.href = "Payment.html";
             }
 
             addToFavourites() {
-                if (!this.selectedCampaign) return;
-                const savedCampaignIds = JSON.parse(localStorage.getItem("favouriteCampaignIds") || "[]");
-                if (!savedCampaignIds.includes(this.selectedCampaign.campaignId)) {
-                    savedCampaignIds.push(this.selectedCampaign.campaignId);
-                    localStorage.setItem("favouriteCampaignIds", JSON.stringify(savedCampaignIds));
+                if (!this.#selectedCampaign) {
+                    return;
                 }
-                alert("Campaign saved to favourites.");
-            }
 
-            async shareCampaign() {
-                if (!this.selectedCampaign) return;
-                const shareUrl = `${window.location.origin}${window.location.pathname}?campaignId=${this.selectedCampaign.campaignId}`;
-                try {
-                    await navigator.clipboard.writeText(shareUrl);
-                    alert("Campaign link copied.");
-                } catch (error) {
-                    prompt("Copy this campaign link:", shareUrl);
+                const savedCampaignIds =
+                    JSON.parse(
+                        localStorage.getItem("favouriteCampaignIds") || "[]"
+                    );
+
+                if (
+                    !savedCampaignIds.includes(
+                        this.#selectedCampaign.campaignId
+                    )
+                ) {
+                    savedCampaignIds.push(
+                        this.#selectedCampaign.campaignId
+                    );
+
+                    localStorage.setItem(
+                        "favouriteCampaignIds",
+                        JSON.stringify(savedCampaignIds)
+                    );
                 }
+
+                alert("Campaign saved to favourites.");
             }
         }
 
         const repository = new CampaignRepository();
-        const view = new CampaignDetailsView();
-        const controller = new CampaignDetailsController(repository, view);
-        controller.initialise();
+        const campaignDetailsView = new CampaignDetailsView();
+
+        const shareCampaignService = new ShareCampaignService();
+        const shareCampaignView = new ShareCampaignView();
+        const shareCampaignController =
+            new ShareCampaignController(
+                shareCampaignService,
+                shareCampaignView
+            );
+
+        const campaignDetailsController =
+            new CampaignDetailsController(
+                repository,
+                campaignDetailsView,
+                shareCampaignController
+            );
+
+        shareCampaignController.initialise();
+        campaignDetailsController.initialise();
     </script>
 </body>
 </html>

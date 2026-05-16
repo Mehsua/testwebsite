@@ -4,14 +4,18 @@ import cors from "cors"
 import {fileURLToPath} from "url"
 
 //IMPORTANT!!!! Remember to add your function name here in order for them to work
-import {getAccounts, createAccount, getCampaigns, getDonations} from "./dono_db.js"
+import {getAccounts, createAccount, getCampaign, getDonations} from "./dono_db.js"
+
+console.log("DB USER:", process.env.MYSQL_USER)
+console.log("DB PASS:", process.env.MYSQL_PASSWORD)
+console.log("DB NAME:", process.env.MYSQL_DATABASE)
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const app = express()
 
 app.use(cors({
-    allowedHeaders: ['Content-Type', 'x-user-country']))
+    allowedHeaders: ['Content-Type', 'x-user-country']}))
 app.use(express.json())
 app.use(express.static("public"))
 
@@ -31,7 +35,9 @@ app.post("/login", async (req, res) => {
         if (user) {
             res.json({
                 success: true,
-                role: user.role
+                role: user.role,
+                country: user.country
+                
             })
         } 
         
@@ -103,11 +109,6 @@ app.post("/createAccount", async (req, res) => {
     }
 })
 
-app.get("/api/campaigns", async (req, res) => {
-    const campaigns = await getCampaigns()
-    res.json(campaigns)
-})
-
 app.get("/api/donations", async (req, res) => {
     const donations = await getDonations()
     res.json(donations)
@@ -118,14 +119,14 @@ app.get("/dono_db", async (req,res) => {
     const accounts = await getAccounts()
     res.send(accounts)
 })
-app.get("/getCampaigns", async (req, res) => {
-    const countryFilter = req.headers['x-user-country'];
+app.get("/getCampaign", async (req, res) => {
+    const countryFilter = req.headers['x-user-country'] || 'all';
 
     try {
         // We pass the country header directly to our database function
-        const campaigns = await getCampaigns(countryFilter);
+        const campaign = await getCampaign(countryFilter);
         
-        res.json(campaigns);
+        res.json(campaign);
     } catch (err) {
         console.error("Database error:", err);
         res.status(500).json({ success: false, message: "Failed to fetch campaigns" });
